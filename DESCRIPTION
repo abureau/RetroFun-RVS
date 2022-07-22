@@ -1,0 +1,15 @@
+Package: RetroFunRVS
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R:
+    person("Loic", "Mangnier", , "loic.mangnier@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6394-9040"))
+Description: RetroFunRVS computes family-based burden statistic considering only affected members and permitting the incorporation of functional annotations
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    ACAT,
+    dplyr,
+    plyr
