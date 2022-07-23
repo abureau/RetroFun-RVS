@@ -5,7 +5,7 @@ RetroFun-RVS is a family-based burden test permitting the integration of functio
 
 ## Package installation
 RetroFunRVS can be installed using 
-``R
+``
 devtools::install_github("lmangnier/RetroFun-RVS", force=T)
 ``
 
