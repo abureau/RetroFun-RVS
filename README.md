@@ -1,7 +1,13 @@
 # RetroFun-RVS
 
 ## General Description
-RetroFun-RVS is a family-based burden test permitting the integration of functional annotations. 
+RetroFun-RVS is a family-based burden test permitting the integration of functional annotations. One of the critical feature of the method is to consider only affected members across families.
+
+## Package installation
+RetroFunRVS can be installed using 
+``R
+devtools::install_github("lmangnier/RetroFun-RVS", force=T)
+``
 
 
 ## Citation 
