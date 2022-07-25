@@ -1,5 +1,5 @@
-usethis::use_package("dplyr")
-usethis::use_package("plyr")
+# usethis::use_package("dplyr")
+# usethis::use_package("plyr")
 #'Aggregate genotypes among affected individuals for each family
 #'
 #'This function aggregates variants across family members. It takes a pedfile as first parameter.
