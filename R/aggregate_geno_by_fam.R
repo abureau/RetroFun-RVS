@@ -1,14 +1,14 @@
 usethis::use_package("dplyr")
 usethis::use_package("plyr")
-#' Aggregate genotypes among affected individuals for each family
+#'Aggregate genotypes among affected individuals for each family
 #'
-#' This function aggregates variants across family members. It takes a pedfile as first parameter.
-#' The sixth first columns must be family id, individual id, father and mother ids, sex and phenotype
-#' Homozyguous variants are replaced by their heterozyguous configurations.
+#'This function aggregates variants across family members. It takes a pedfile as first parameter.
+#'The six first columns must be family id, individual id, father and mother ids, sex and phenotype
+#'Homozyguous variants are replaced by their heterozyguous configurations.
 #'
-#' @param pedfile is a genotype file in ped format: A .ped file
-#' @return A list with the ped file corrected and aggregated by family and index each variants observed in families
-#' @export
+#'@param pedfile is a genotype file in ped format: A .ped file
+#'@return A list with the ped file corrected and aggregated by family and index each variants observed in families
+#'@export
 
 aggregate.geno.by.fam = function(pedfile){
   p = read.table(pedfile, header = F)
