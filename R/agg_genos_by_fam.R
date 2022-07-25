@@ -11,7 +11,7 @@
 #'@return A list with the ped file corrected and aggregated by family and index each variants observed in families
 #'@export
 
-aggregate.geno.by.fam = function(pedfile){
+agg.geno.by.fam = function(pedfile){
   p = read.table(pedfile, header = F)
   fam = p[,1:6]
   affected = which(fam$V6==2)
