@@ -13,3 +13,7 @@ Imports:
     ACAT,
     dplyr,
     plyr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

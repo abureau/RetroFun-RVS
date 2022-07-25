@@ -14,6 +14,6 @@ A list with the ped file corrected and aggregated by family and index each varia
 }
 \description{
 This function aggregates variants across family members. It takes a pedfile as first parameter.
-The sixth first columns must be family id, individual id, father and mother ids, sex and phenotype
+The six first columns must be family id, individual id, father and mother ids, sex and phenotype
 Homozyguous variants are replaced by their heterozyguous configurations.
 }
