@@ -25,7 +25,7 @@ compute.Var.by.Annot(
 
 \item{W}{is a p*p matrix of weights. Should be a identity matrix when unweighted version is needed.}
 
-\item{independence}{is a boolean.}
+\item{independence}{is a boolean. Default value is FALSE. If variant independence can be assumed, use independence=TRUE.}
 }
 \value{
 a list with each variance by annotation

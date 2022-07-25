@@ -16,7 +16,7 @@ compute.Burden.by.Annot(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W)
 \item{W}{is a p*p matrix of weights. Should be a identity matrix when unweighted version is needed.}
 }
 \value{
-a list with each Score by annotation
+a list with each score by annotation
 }
 \description{
 This function computes the functional annotation burden statistic. It assumes that the first parameter is

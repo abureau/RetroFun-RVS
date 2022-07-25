@@ -7,7 +7,7 @@
 \method{aggregate}{geno.by.fam}(pedfile)
 }
 \arguments{
-\item{pedfile}{is a genotype file in ped format: A .ped file}
+\item{pedfile}{is a genotype file in ped format: A path to a .ped file}
 }
 \value{
 A list with the ped file corrected and aggregated by family and index each variants observed in families

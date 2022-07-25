@@ -15,12 +15,12 @@ compute.null = function(pedigree.configurations, pedigree.probas){
   else{
     l = length(pedigree.configurations)
     expected_values = sapply(1:l, function(x) sum(pedigree.configurations[[x]] * pedigree.probas[[x]] ))
-    
+
     df_expected_by_fam = data.frame("FamID" = names(pedigree.configurations), "Expected" = expected_values)
     df_var_covar_by_fam = compute.var.by.fam(pedigree.configurations, pedigree.probas)
-    
+
     df_output = merge(df_expected_by_fam, df_var_covar_by_fam, by="FamID")
     return(df_output)
   }
-  
+
 }
