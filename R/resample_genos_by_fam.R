@@ -22,7 +22,7 @@ resample.genos.by.fam = function(aggregate.geno.by.fam, prob_sharing_by_famid=NU
   for(x in 1:length(agg_tmp$ped_agg$pedigree)){
     famid = agg_tmp$ped_agg$pedigree[x]
 
-    if(is.null(resample.genos.by.fam)){
+    if(is.null(prob_sharing_by_famid)){
       sample_geno = sample(1:length(prob_sharing_by_famid[[famid]]),n_non_null[x], replace=T)
     }
 
