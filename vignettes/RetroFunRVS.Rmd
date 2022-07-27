@@ -1,0 +1,66 @@
+---
+title: "RetroFunRVS"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{RetroFunRVS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# General Presentation  
+*RetroFunRVS* is a retrospective family-based burden test incorporating functional annotations. One critical feature of the method is to consider only affected members among families. See Mangnier & Bureau, 2022 for theoretical justification, statistical derivations, and power simulation results.  
+```{r, include = FALSE}
+knitr::opts_knit$set(root.dir = "C:\\Users\\loicm\\Documents\\recherche\\Github\\RetroFun-RVS\\data")
+
+```
+
+
+
+# Input Data  
+*RetroFunRVS* works directly with .ped files. Basically, the six first columns of a .ped file are composed by pedigree information (family id, individual id, father and mother id, sex and status), followed by 2 x number of variants, where 1 corresponds to reference allele while 2 is the alternative. In addition, *RetroFunRVS* needs sharing probabilities to compute score statistic and its variance, which can be obtained with *RVS* package (Sherman et al., 2019). An example .ped file can be found on Github and the corresponding sharing probabilities for each pedigree as well.
+
+# Core Functions  
+## Import and Cleaning Data  
+
+The first step is to import data and proceed to some cleaning. In this version, we take unique combinations of variants across individuals, while homozyguous variants are converted into heterozyguous. You can import your ped file using **agg.genos.by.fam** function, specifying the path of where your .ped file is.
+
+The returned object is a list with the aggregated genotypes in each family and the corresponding index variants. These latters will be used to weight variants and incorporate functional annotations in the further steps. 
+
+```{r setup}
+library(RetroFunRVS)
+pedfile.clean = agg.genos.by.fam("sample_ped.ped")
+pedfile.clean
+```
+
+## Score Statistic
+
+### Null Value 
+Since the data have been imported, we need to compute the score test statistic. To do so, we firstly need to have the genotype null value for each family. Since every single carrier configuration and the corresponding probability has been obtained (See Sherman et al., 2019 for technical details), we are able to have the null value using **compute.null** function.  
+
+The object returned by the function is a data.frame with the family id, the expected value under the null, the corresponding variance and covariance.  
+
+```{r}
+load("SPAPsimpleprob.RData")
+null = compute.null(forsim.N.list, forsim.pattern.prob.list)
+head(null)
+```
+### Score Statistic 
+
+Since you have preprocessed your .ped file and obtained the expected null value, you can obtain your p-values using **RetroFun.RVS**. Basically, the function returns individual p-values (e.g., for each functional annotation and the ACAT-combined p-values (Liu et al., 2019). Fisher's method-combined p-values are also provided. 
+
+```{r}
+
+#Fist annotation with equal weights
+first.annot = sample(c(0,1),510, replace = T)
+#Second annotation with unequal weights
+second.annot = sample(c(0,1), 510, replace = T, prob=c(0.8, 0.2))
+
+#Annotation matrix, the first column should be composed only with ones
+Z = matrix(c(rep(1,510),first.annot, second.annot, ncol=3,nrow=510))
+           
+RetroFun.RVS(null, pedfile.clean, Z, diag(1, nrow=510,ncol=510), independence = F)
+```
+
+#Cite  
+
+RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations, Loic Mangnier, Alexandre Bureau, bioRxiv 2022.06.21.497085; doi: https://doi.org/10.1101/2022.06.21.497085

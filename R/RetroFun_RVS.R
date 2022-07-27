@@ -15,7 +15,7 @@ usethis::use_package("ACAT")
 
 RetroFun.RVS = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W, independence=F){
   Burden.Stat = compute.Burden.by.Annot(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W)$B
-  Var.Stat = unlist(compute.Var.by.annot(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W,independence = independence))
+  Var.Stat = unlist(compute.Var.by.Annot(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W,independence = independence))
 
   p = pchisq(Burden.Stat/Var.Stat,1,lower.tail = F)
 
