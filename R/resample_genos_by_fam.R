@@ -31,7 +31,7 @@ resample.genos.by.fam = function(aggregate.geno.by.fam, prob_sharing_by_famid=NU
 
     }
 
-    agg_tmp_ped_agg[x,index_non_null] = sample_geno
+    agg_tmp_ped_agg[x,index_non_null[[x]]] = sample_geno
   }
   agg_tmp_ped_agg = data.frame("pedigree"=agg_tmp$ped_agg[,1],agg_tmp_ped_agg)
   agg_tmp$ped_agg = agg_tmp_ped_agg
