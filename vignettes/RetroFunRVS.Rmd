@@ -56,7 +56,7 @@ first.annot = sample(c(0,1),510, replace = T)
 second.annot = sample(c(0,1), 510, replace = T, prob=c(0.8, 0.2))
 
 #Annotation matrix, the first column should be composed only with ones
-Z = matrix(c(rep(1,510),first.annot, second.annot, ncol=3,nrow=510))
+Z = matrix(c(rep(1,510),first.annot, second.annot),ncol=3,nrow=510)
            
 RetroFun.RVS(null, pedfile.clean, Z, diag(1, nrow=510,ncol=510), independence = F)
 ```
