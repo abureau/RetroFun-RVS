@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# General Presentation  
+## General Presentation  
 *RetroFunRVS* is a retrospective family-based burden test incorporating functional annotations. One critical feature of the method is to consider only affected members among families. See Mangnier & Bureau, 2022 for theoretical justification, statistical derivations, and power simulation results.  
 ```{r, include = FALSE}
 knitr::opts_knit$set(root.dir = "C:\\Users\\loicm\\Documents\\recherche\\Github\\RetroFun-RVS\\data")
@@ -16,26 +16,28 @@ knitr::opts_knit$set(root.dir = "C:\\Users\\loicm\\Documents\\recherche\\Github\
 
 
 
-# Input Data  
-*RetroFunRVS* works directly with .ped files. Basically, the six first columns of a .ped file are composed by pedigree information (family id, individual id, father and mother id, sex and status), followed by 2 x number of variants, where 1 corresponds to reference allele while 2 is the alternative. In addition, *RetroFunRVS* needs sharing probabilities to compute score statistic and its variance, which can be obtained with *RVS* package (Sherman et al., 2019). An example .ped file can be found on Github and the corresponding sharing probabilities for each pedigree as well.
+## Input Data  
+*RetroFunRVS* works directly with .ped files. Basically, the six first columns of a .ped file are composed by pedigree information (family id, individual id, father and mother id, sex and status), followed by 2 x number of variants, where 1 corresponds to the reference allele while 2 is the alternative. In addition, *RetroFunRVS* needs sharing probabilities to compute score statistic and its variance, which can be obtained with *RVS* package (Sherman et al., 2019). An example .ped file can be found on Github and the corresponding sharing probabilities for each pedigree as well.
 
-# Core Functions  
-## Import and Cleaning Data  
+## Core Functions  
+### Import and Cleaning Data  
 
-The first step is to import data and proceed to some cleaning. In this version, we take unique combinations of variants across individuals, while homozyguous variants are converted into heterozyguous. You can import your ped file using **agg.genos.by.fam** function, specifying the path of where your .ped file is.
+The first step is to import data and proceed to some cleaning. In this version, we take unique combinations of variants across individuals, while homozyguous variants are converted into heterozyguous. You can import your .ped file using **agg.genos.by.fam** function, only specifying the path.  
 
 The returned object is a list with the aggregated genotypes in each family and the corresponding index variants. These latters will be used to weight variants and incorporate functional annotations in the further steps. 
 
 ```{r setup}
 library(RetroFunRVS)
+
+set.seed(1234)
 pedfile.clean = agg.genos.by.fam("sample_ped.ped")
 pedfile.clean
 ```
 
-## Score Statistic
+### Score Statistic
 
-### Null Value 
-Since the data have been imported, we need to compute the score test statistic. To do so, we firstly need to have the genotype null value for each family. Since every single carrier configuration and the corresponding probability has been obtained (See Sherman et al., 2019 for technical details), we are able to have the null value using **compute.null** function.  
+#### Null Value 
+Since the data have been imported, we need to compute the score test statistic. To do so, we firstly need to have the genotype null value for each family. Carrier configurations and the corresponding probabilities have been obtained (See Sherman et al., 2019 for technical details), and from now we are able to have the null value using **compute.null** function.  
 
 The object returned by the function is a data.frame with the family id, the expected value under the null, the corresponding variance and covariance.  
 
@@ -44,9 +46,13 @@ load("SPAPsimpleprob.RData")
 null = compute.null(forsim.N.list, forsim.pattern.prob.list)
 head(null)
 ```
-### Score Statistic 
+#### P-values 
 
-Since you have preprocessed your .ped file and obtained the expected null value, you can obtain your p-values using **RetroFun.RVS**. Basically, the function returns individual p-values (e.g., for each functional annotation and the ACAT-combined p-values (Liu et al., 2019). Fisher's method-combined p-values are also provided. 
+Since you have pre-processed your .ped file and obtained the expected null value, you can obtain your p-values using the  **RetroFun.RVS** function. Basically, the function returns individual p-values (e.g., for each functional annotation) and the ACAT-combined p-values (Liu et al., 2019) for a set of p-values within an arbitrary region. Fisher's method-combined p-values are also provided. 
+
+In a similar vein as our paper, we randomly generated two functional annotations, corresponding to regions with functional impacts (e.g., Cis-Regulatory Hubs). It is worthy noting that correlation structure between variants can be specified using the **independence** parameter. 
+
+Similar to He et al. 2017, we integrated the original burden test, ensuring the robustness of the method. In doing so, **RetroFun-RVS** higlights a minimal loss of power when no functional annotation is predictive with the trait.  
 
 ```{r}
 
@@ -57,10 +63,61 @@ second.annot = sample(c(0,1), 510, replace = T, prob=c(0.8, 0.2))
 
 #Annotation matrix, the first column should be composed only with ones
 Z = matrix(c(rep(1,510),first.annot, second.annot),ncol=3,nrow=510)
-           
+
+#Equal weights, assuming correlation between variants
 RetroFun.RVS(null, pedfile.clean, Z, diag(1, nrow=510,ncol=510), independence = F)
+
+#Here we can assume weights depending on MAF
+beta.weights = diag(dbeta(runif(510, 0.00001, 0.01), 1,25), ncol=510, nrow=510)
+
+RetroFun.RVS(null, pedfile.clean, Z, beta.weights, independence = F) 
+
+#No annotation is predictive with the trait
+third.annot = sample(c(0,1),510, replace = T, prob = c(0.9,0.1))
+fourth.annot = sample(c(0,1),510, replace = T, prob = c(0.95,0.05))
+
+Z.nonpred = matrix(c(rep(1,510),third.annot, fourth.annot),ncol=3,nrow=510)
+
+RetroFun.RVS(null, pedfile.clean, Z.nonpred, diag(1, nrow=510,ncol=510), independence = F)
 ```
 
-#Cite  
+#### Bootstrap procedure  
 
-RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations, Loic Mangnier, Alexandre Bureau, bioRxiv 2022.06.21.497085; doi: https://doi.org/10.1101/2022.06.21.497085
+Under certain circumstances (In the presence of small families, families with a few affected or functional annotations encompassing few variants), asymptotic derivation may lead to type-I error rate inflation. To address this limitation, a bootstrap procedure can provide a relevant alternative. 
+
+```{r}
+prob.sharing.by.famid = lapply(1:length(forsim.pattern.prob.list), function(x) tapply(forsim.pattern.prob.list[[x]], forsim.N.list[[x]], sum))
+
+names(prob.sharing.by.famid) = names(forsim.pattern.prob.list)
+
+resample.genos = resample.genos.by.fam(pedfile.clean, prob.sharing.by.famid)
+```
+
+Finally, p-values can be obtained comparing bootstrap statistics with observed statistic for each functional annotation. Here we provide a example on one replicate. 
+
+```{r}
+
+#Bootstrap burden statistic
+compute.Burden.by.Annot(null,resample.genos, Z, diag(1, nrow=510,ncol=510))
+
+#Observed burden statistic
+compute.Burden.by.Annot(null,pedfile.clean, Z, diag(1, nrow=510,ncol=510))
+```
+
+
+## Contact
+
+For any questions regarding the package or the method, please send an email to loic.mangnier@gmail.com.  
+
+## Cite  
+
+RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations, Loic Mangnier, Alexandre Bureau, bioRxiv 2022.06.21.497085; doi: https://doi.org/10.1101/2022.06.21.497085  
+
+## References
+
+Zihuai He, Bin Xu, Seunggeun Lee, Iuliana Ionita-Laza,
+Unified Sequence-Based Association Tests Allowing for Multiple Functional Annotations and Meta-analysis of Noncoding Variation in Metabochip Data, The American Journal of Human Genetics, Volume 101, Issue 3, 2017, Pages 340-352, ISSN 0002-9297, https://doi.org/10.1016/j.ajhg.2017.07.011.
+
+Liu Y, Chen S, Li Z, Morrison AC, Boerwinkle E, Lin X. ACAT: A Fast and Powerful p Value Combination Method for Rare-Variant Analysis in Sequencing Studies. Am J Hum Genet. 2019 Mar 7;104(3):410-421. doi: 10.1016/j.ajhg.2019.01.002. PMID: 30849328; PMCID: PMC6407498.  
+
+Thomas Sherman, Jack Fu, Robert B Scharpf, Alexandre Bureau, Ingo Ruczinski, Detection of rare disease variants in extended pedigrees using RVS, Bioinformatics, Volume 35, Issue 14, July 2019, Pages 2509–2511, https://doi.org/10.1093/bioinformatics/bty976
