@@ -2,8 +2,8 @@
 #'
 #' This functions proceeds to non-parametric bootstrap for each family. Genotypes can be resampled based on
 #' sharing probabilities
-#' @param aggregate.geno.by.fam a list return by agg.genos.by.fam
-#' @param prob_sharing_by_famid a list with the corresponding sharing probabilities for each genotype configurations in families
+#' @param agg.genos.by.fam a list return by agg.genos.by.fam
+#' @param prob.sharing.by.famid a list with the corresponding sharing probabilities for each genotype configurations in families
 #'
 #' @return resample data.frame
 #'
