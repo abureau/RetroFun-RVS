@@ -2,32 +2,32 @@
 #'
 #' This functions proceeds to non-parametric bootstrap for each family. Genotypes can be resampled based on
 #' sharing probabilities
-#' @param aggregate.geno.by.fam a list return by aggregate.geno.by.fam
+#' @param aggregate.geno.by.fam a list return by agg.genos.by.fam
 #' @param prob_sharing_by_famid a list with the corresponding sharing probabilities for each genotype configurations in families
 #'
 #' @return resample data.frame
 #'
 #'@export
 
-resample.genos.by.fam = function(aggregate.geno.by.fam, prob_sharing_by_famid=NULL){
+resample.genos.by.fam = function(agg.genos.by.fam, prob.sharing.by.famid, probs=NULL){
 
 
-  index_non_null = apply(aggregate.geno.by.fam$ped_agg[,-1],1,function(x) which(x>0))
-  n_non_null = apply(aggregate.geno.by.fam$ped_agg[,-1],1,function(x) length(which(x>0)))
+  index_non_null = apply(agg.genos.by.fam$ped_agg[,-1],1,function(x) which(x>0))
+  n_non_null = apply(agg.genos.by.fam$ped_agg[,-1],1,function(x) length(which(x>0)))
 
-  agg_tmp = aggregate.geno.by.fam
-  agg_tmp_ped_agg = aggregate.geno.by.fam$ped_agg[,-1]
+  agg_tmp = agg.genos.by.fam
+  agg_tmp_ped_agg = agg.genos.by.fam$ped_agg[,-1]
 
 
   for(x in 1:length(agg_tmp$ped_agg$pedigree)){
     famid = agg_tmp$ped_agg$pedigree[x]
 
-    if(is.null(prob_sharing_by_famid)){
-      sample_geno = sample(1:length(prob_sharing_by_famid[[famid]]),n_non_null[x], replace=T)
+    if(is.null(probs)){
+      sample_geno = sample(1:length(prob.sharing.by.famid[[famid]]),n_non_null[x], replace=T)
     }
 
-    else{
-      sample_geno = sample(1:length(prob_sharing_by_famid[[famid]]),n_non_null[x], replace=T, prob = prob_sharing_by_famid)
+    else {
+      sample_geno = sample(1:length(prob.sharing.by.famid[[famid]]),n_non_null[x], replace=T, prob = probs)
 
     }
 
