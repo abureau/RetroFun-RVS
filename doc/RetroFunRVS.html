@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>RetroFunRVS</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">RetroFunRVS</h1>
+
+
+
+<div id="general-presentation" class="section level2">
+<h2>General Presentation</h2>
+<p><em>RetroFunRVS</em> is a retrospective family-based burden test incorporating functional annotations. One critical feature of the method is to consider only affected members among families. See Mangnier &amp; Bureau, 2022 for theoretical justification, statistical derivations, and power simulation results.</p>
+</div>
+<div id="input-data" class="section level2">
+<h2>Input Data</h2>
+<p><em>RetroFunRVS</em> works directly with .ped files. Basically, the six first columns of a .ped file are composed by pedigree information (family id, individual id, father and mother id, sex and status), followed by 2 x number of variants, where 1 corresponds to the reference allele while 2 is the alternative. In addition, <em>RetroFunRVS</em> needs sharing probabilities to compute score statistic and its variance, which can be obtained with <em>RVS</em> package (Sherman et al., 2019). An example .ped file can be found on Github and the corresponding sharing probabilities for each pedigree as well.</p>
+</div>
+<div id="core-functions" class="section level2">
+<h2>Core Functions</h2>
+<div id="import-and-cleaning-data" class="section level3">
+<h3>Import and Cleaning Data</h3>
+<p>The first step is to import data and proceed to some cleaning. In this version, we take unique combinations of variants across individuals, while homozyguous variants are converted into heterozyguous. You can import your .ped file using <strong>agg.genos.by.fam</strong> function, only specifying the path.</p>
+<p>The returned object is a list with the aggregated genotypes in each family and the corresponding index variants. These latters will be used to weight variants and incorporate functional annotations in the further steps.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RetroFunRVS)</span></code></pre></div>
+<pre><code>## Loading required package: ACAT</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pedfile.clean <span class="ot">=</span> <span class="fu">agg.genos.by.fam</span>(<span class="st">&quot;sample_ped.ped&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pedfile.clean</span></code></pre></div>
+<pre><code>## $ped_agg
+##    pedigree X1 X14 X15 X22 X23 X26 X30 X39 X41 X47 X50 X59 X62 X63 X64 X66 X67
+## 1       101  0   0   0   0   0   0   1   0   5   0   0   0   0   0   0   0   0
+## 2       105  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3       108  0   0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0
+## 5       111  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 6       115  0   0   4   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 7       119  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 9       122  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 10      123  0   0   0   0   0   0   0   0   0   0   0   0   0   2   0   0   0
+## 11      124  0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0
+## 12      125  0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0
+## 13      126  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 14      129  0   0   0   0   0   0   0   0   0   0   0   0   0   0   4   0   0
+## 15      133  0   0   0   0   0   0   0   0   0   0   0   3   0   0   0   0   0
+## 16      134  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 17      182  0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0
+## 18      207  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 19      208  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 20      211  0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0   0
+## 21     211A  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 22      212  0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0
+## 24      217  0   0   0   2   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 25      218  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 26      220  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 27      223  0   0   0   0   2   0   0   0   0   0   0   0   0   0   0   0   0
+## 29      227  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0
+## 30      228  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 31      230  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 32      233  1   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0
+## 34      235  0   0   0   0   0   0   0   0   0   0   1   0   0   0   0   0   6
+## 36      238  0   1   0   0   0   0   4   1   0   4   0   0   0   0   0   0   6
+## 37      239  0   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0
+## 38      245  0   0   0   0   0   0   0   0   4   0   0   0   0   0   0   0   0
+## 39      250  0   0   0   0   0   0   0   0   3   0   0   0   0   0   3   0   0
+## 40    S2029  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+##    X81 X85 X97 X106 X108 X120 X123 X124 X135 X155 X158 X166 X185 X189 X193 X222
+## 1    0   0   0    0    0    0    0    0    9    0    0    0    0    0    0    0
+## 2    0   0   0    0    0    0    0    0    1    0    0    0    0    0    0    0
+## 3    0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 5    0   0   0    0    0    0    0    0    0    1    0    0    0    0    0    0
+## 6    0   0   0    2    0    0    0    0    0    0    0    0    0    0    0    0
+## 7    0   0   1    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 9    0   0   0    0    0    0    3    0    0    0    0    0    0    0    0    0
+## 10   1   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 11   0   0   0    0    0    0    3    5    0    0    0    0    0    0    3    0
+## 12   0   0   0    0    0    0    0    0    9    0    0    0    0    0    0    0
+## 13   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 14   0   1   0    0    0    0    0    0    0    0    0    0    3    0    0    0
+## 15   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 16   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 17   0   0   0    2    4    0    0    0    0    0    0    0    0    0    0    0
+## 18   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 19   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    2
+## 20   0   0   0    0    0    0    0    0    9    0    0    0    0    0    0    0
+## 21   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 22   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 24   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 25   0   0   0    0    0    0    0    0    2    0    0    0    0    0    0    0
+## 26   0   0   0    0    0    0    0    0    0    0    0    2    0    0    0    0
+## 27   0   0   0    0    0    0    2    0    0    0    0    0    0    0    0    0
+## 29   0   0   0    0    0    0    0    0    0    0    1    0    0    0    0    0
+## 30   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 31   0   0   0    0    0    0    0    7    8    0    0    0    0    0    0    0
+## 32   0   0   0    0    0    0    0    0    0    0    0    0    2    0    0    0
+## 34   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 36   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 37   0   0   0    0    0    2    0    0    0    0    0    0    0    0    0    0
+## 38   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 39   0   0   0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 40   0   0   0    0    0    0    0    0    0    0    0    0    0    1    0    0
+##    X250 X254 X267 X282 X287 X291 X296 X302 X305 X306 X317 X328 X366 X368 X375
+## 1     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 2     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 5     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 6     4    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 9     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 10    0    0    0    0    0    0    0    0    0    0    0    2    0    0    0
+## 11    3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 12    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0
+## 13    0    0    0    0    0    0    0    0    1    1    0    0    0    0    0
+## 14    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 15    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 16    0    0    1    0    0    0    0    1    0    0    0    0    0    0    0
+## 17    0    1    0    0    1    0    0    0    0    0    0    0    0    0    0
+## 18    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 19    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 20    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 21    0    0    2    0    0    0    0    0    0    0    0    0    0    0    0
+## 22    0    0    1    0    0    0    0    0    0    0    0    0    0    0    0
+## 24    0    0    0    0    0    0    0    0    0    0    2    0    0    0    0
+## 25    0    0    0    0    0    0    0    0    0    0    0    0    0    0    2
+## 26    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 27    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0
+## 29    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 30    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 31    0    0    0    0    0    1    0    0    0    0    0    0    0    8    0
+## 32    0    0    0    0    0    0    0    0    0    0    0    3    0    0    0
+## 34    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 36    0    0    0    0    0    0    0    0    0    1    0    0    0    1    0
+## 37    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 38    0    0    0    0    0    0    0    0    0    0    0    0    3    0    0
+## 39    0    0    0    0    0    0    3    0    0    0    0    0    0    0    0
+## 40    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+##    X377 X381 X410 X413 X429 X430 X435 X444 X449 X459 X462 X468 X486 X501 X502
+## 1     0    0    0    0    0    1    0    5    0    0    0    0    0    0    0
+## 2     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3     0    0    0    0    0    0    0    3    0    0    0    0    0    0    0
+## 5     0    0    0    0    0    1    0    0    0    0    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0    1
+## 9     0    0    0    2    0    0    0    0    0    0    0    0    0    2    0
+## 10    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 11    0    0    0    0    2    0    0    0    1    0    0    0    0    0    0
+## 12    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 13    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 14    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 15    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 16    0    0    0    0    0    0    0    0    0    0    0    1    0    0    0
+## 17    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 18    0    0    0    0    0    0    0    0    0    0    1    0    0    0    0
+## 19    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 20    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 21    1    0    0    0    0    0    0    0    0    0    0    0    0    2    0
+## 22    0    0    0    0    0    0    2    0    0    0    0    0    0    0    0
+## 24    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 25    0    0    0    0    0    0    0    0    0    0    0    0    0    2    0
+## 26    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 27    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 29    0    0    3    0    0    0    0    0    0    0    0    0    0    0    0
+## 30    0    0    0    0    0    0    0    0    0    2    0    0    0    0    0
+## 31    0    0    0    0    0    0    0    0    0    0    0    0    0    7    0
+## 32    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 34    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 36    0    0    0    0    0    0    0    0    0    0    0    0    1    0    0
+## 37    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0
+## 38    0    4    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 39    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 40    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 
+## $index_variants
+##  [1]   1  14  15  22  23  26  30  39  41  47  50  59  62  63  64  66  67  81  85
+## [20]  97 106 108 120 123 124 135 155 158 166 185 189 193 222 250 254 267 282 287
+## [39] 291 296 302 305 306 317 328 366 368 375 377 381 410 413 429 430 435 444 449
+## [58] 459 462 468 486 501 502</code></pre>
+</div>
+<div id="score-statistic" class="section level3">
+<h3>Score Statistic</h3>
+<div id="null-value" class="section level4">
+<h4>Null Value</h4>
+<p>Since the data have been imported, we need to compute the score test statistic. To do so, we firstly need to have the genotype null value for each family. Carrier configurations and the corresponding probabilities have been obtained (See Sherman et al., 2019 for technical details), and from now we are able to have the null value using <strong>compute.null</strong> function.</p>
+<p>The object returned by the function is a data.frame with the family id, the expected value under the null, the corresponding variance and covariance.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;SPAPsimpleprob.RData&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>null <span class="ot">=</span> <span class="fu">compute.null</span>(forsim.N.list, forsim.pattern.prob.list)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(null)</span></code></pre></div>
+<pre><code>##   FamID Expected       Var      CoVar
+## 1   101 2.760784 4.4251288 0.65216500
+## 2   103 1.326076 0.4222959 0.42229590
+## 3   105 1.553398 0.7714205 0.28747648
+## 4  105A 1.576631 0.8864731 0.88647312
+## 5   108 1.500000 0.5000000 0.04000000
+## 6   110 1.276808 0.2450731 0.08414157</code></pre>
+</div>
+<div id="p-values" class="section level4">
+<h4>P-values</h4>
+<p>Since you have pre-processed your .ped file and obtained the expected null value, you can obtain your p-values using the <strong>RetroFun.RVS</strong> function. Basically, the function returns individual p-values (e.g., for each functional annotation) and the ACAT-combined p-values (Liu et al., 2019) for a set of p-values within an arbitrary region. Fisher’s method-combined p-values are also provided.</p>
+<p>In a similar vein as our paper, we randomly generated two functional annotations, corresponding to regions with functional impacts (e.g., Cis-Regulatory Hubs). It is worthy noting that correlation structure between variants can be specified using the <strong>independence</strong> parameter.</p>
+<p>Similar to He et al. 2017, we integrated the original burden test, ensuring the robustness of the method. In doing so, <strong>RetroFun-RVS</strong> higlights a minimal loss of power when no functional annotation is predictive with the trait.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Fist annotation with equal weights</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>first.annot <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">510</span>, <span class="at">replace =</span> T)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Second annotation with unequal weights</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>second.annot <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dv">510</span>, <span class="at">replace =</span> T, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.2</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Annotation matrix, the first column should be composed only with ones</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">510</span>),first.annot, second.annot),<span class="at">ncol=</span><span class="dv">3</span>,<span class="at">nrow=</span><span class="dv">510</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Equal weights, assuming correlation between variants</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">RetroFun.RVS</span>(null, pedfile.clean, Z, <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">510</span>,<span class="at">ncol=</span><span class="dv">510</span>), <span class="at">independence =</span> F)</span></code></pre></div>
+<pre><code>##        Score1     Score2    Score3         ACAT       Fisher
+## 1 5.76389e-05 0.02123597 0.7610204 0.0001724827 3.517651e-07</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here we can assume weights depending on MAF</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>beta.weights <span class="ot">=</span> <span class="fu">diag</span>(<span class="fu">dbeta</span>(<span class="fu">runif</span>(<span class="dv">510</span>, <span class="fl">0.00001</span>, <span class="fl">0.01</span>), <span class="dv">1</span>,<span class="dv">25</span>), <span class="at">ncol=</span><span class="dv">510</span>, <span class="at">nrow=</span><span class="dv">510</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">RetroFun.RVS</span>(null, pedfile.clean, Z, beta.weights, <span class="at">independence =</span> F) </span></code></pre></div>
+<pre><code>##         Score1     Score2   Score3         ACAT      Fisher
+## 1 3.138727e-05 0.01951403 0.824155 9.402579e-05 1.20841e-07</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#No annotation is predictive with the trait</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>third.annot <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">510</span>, <span class="at">replace =</span> T, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.1</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>fourth.annot <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="dv">510</span>, <span class="at">replace =</span> T, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.95</span>,<span class="fl">0.05</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Z.nonpred <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">510</span>),third.annot, fourth.annot),<span class="at">ncol=</span><span class="dv">3</span>,<span class="at">nrow=</span><span class="dv">510</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">RetroFun.RVS</span>(null, pedfile.clean, Z.nonpred, <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">510</span>,<span class="at">ncol=</span><span class="dv">510</span>), <span class="at">independence =</span> F)</span></code></pre></div>
+<pre><code>##        Score1    Score2    Score3         ACAT       Fisher
+## 1 5.76389e-05 0.2879687 0.7850857 0.0001729312 3.458402e-06</code></pre>
+</div>
+<div id="bootstrap-procedure" class="section level4">
+<h4>Bootstrap procedure</h4>
+<p>Under certain circumstances (In the presence of small families, families with a few affected or functional annotations encompassing few variants), asymptotic derivation may lead to type-I error rate inflation. To address this limitation, a bootstrap procedure can provide a relevant alternative.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>prob.sharing.by.famid <span class="ot">=</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(forsim.pattern.prob.list), <span class="cf">function</span>(x) <span class="fu">tapply</span>(forsim.pattern.prob.list[[x]], forsim.N.list[[x]], sum))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(prob.sharing.by.famid) <span class="ot">=</span> <span class="fu">names</span>(forsim.pattern.prob.list)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>resample.genos <span class="ot">=</span> <span class="fu">resample.genos.by.fam</span>(pedfile.clean, prob.sharing.by.famid)</span></code></pre></div>
+<p>Finally, p-values can be obtained comparing bootstrap statistics with observed statistic for each functional annotation. Here we provide a example on one replicate.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Bootstrap burden statistic</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compute.Burden.by.Annot</span>(null,resample.genos, Z, <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">510</span>,<span class="at">ncol=</span><span class="dv">510</span>))</span></code></pre></div>
+<pre><code>## $B
+##          [,1]     [,2]     [,3]
+## [1,] 21242.72 9798.868 1237.427</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Observed burden statistic</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compute.Burden.by.Annot</span>(null,pedfile.clean, Z, <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow=</span><span class="dv">510</span>,<span class="at">ncol=</span><span class="dv">510</span>))</span></code></pre></div>
+<pre><code>## $B
+##          [,1]     [,2]     [,3]
+## [1,] 3569.923 675.4403 1.385504</code></pre>
+</div>
+</div>
+</div>
+<div id="contact" class="section level2">
+<h2>Contact</h2>
+<p>For any questions regarding the package or the method, please send an email to <a href="mailto:loic.mangnier@gmail.com" class="email">loic.mangnier@gmail.com</a>.</p>
+</div>
+<div id="cite" class="section level2">
+<h2>Cite</h2>
+<p>RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations, Loic Mangnier, Alexandre Bureau, bioRxiv 2022.06.21.497085; doi: <a href="https://doi.org/10.1101/2022.06.21.497085" class="uri">https://doi.org/10.1101/2022.06.21.497085</a></p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Zihuai He, Bin Xu, Seunggeun Lee, Iuliana Ionita-Laza, Unified Sequence-Based Association Tests Allowing for Multiple Functional Annotations and Meta-analysis of Noncoding Variation in Metabochip Data, The American Journal of Human Genetics, Volume 101, Issue 3, 2017, Pages 340-352, ISSN 0002-9297, <a href="https://doi.org/10.1016/j.ajhg.2017.07.011" class="uri">https://doi.org/10.1016/j.ajhg.2017.07.011</a>.</p>
+<p>Liu Y, Chen S, Li Z, Morrison AC, Boerwinkle E, Lin X. ACAT: A Fast and Powerful p Value Combination Method for Rare-Variant Analysis in Sequencing Studies. Am J Hum Genet. 2019 Mar 7;104(3):410-421. doi: 10.1016/j.ajhg.2019.01.002. PMID: 30849328; PMCID: PMC6407498.</p>
+<p>Thomas Sherman, Jack Fu, Robert B Scharpf, Alexandre Bureau, Ingo Ruczinski, Detection of rare disease variants in extended pedigrees using RVS, Bioinformatics, Volume 35, Issue 14, July 2019, Pages 2509–2511, <a href="https://doi.org/10.1093/bioinformatics/bty976" class="uri">https://doi.org/10.1093/bioinformatics/bty976</a></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
