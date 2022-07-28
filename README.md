@@ -9,9 +9,9 @@ RetroFunRVS can be installed using
 devtools::install_github("lmangnier/RetroFun-RVS", force=T)
 ``
 
-## Use Case  
+## Example 
 
-An use case has been provided, please refer to the vignette.  
+An use case to illustrate core functions has been provided, please refer to the wiki.  
 
 ## Citation 
 RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations
