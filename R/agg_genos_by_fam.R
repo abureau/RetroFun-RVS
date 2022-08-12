@@ -34,7 +34,8 @@ agg.genos.by.fam = function(pedfile){
   #df.genos.affected = df.genos.affected[,-which(colSums(df.genos.affected)==0)]
   
   df.genos.affected = df.genos.affected %>% dplyr::select(-which(colSums(df.genos.affected, na.rm = T)==0))
-  
+  df.genos.affected = df.genos.affected %>% dplyr::select(-which(colSums(is.na(df.genos.affected))==nrow(df.genos.affected)))
+
   df.genos.affected$pedigree = fam[affected,"V1"]
 
   df.genos.agg.by.fam = aggregate(.~pedigree,df.genos.affected, sum, na.rm=T ,na.action = NULL)
