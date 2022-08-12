@@ -27,16 +27,20 @@ agg.genos.by.fam = function(pedfile){
   df.genos.affected = df.genos[affected,]
   df.genos.affected = data.frame(t(unique(t(df.genos.affected))))
   df.genos.affected[df.genos.affected==2] = 1
-  df.genos.affected = df.genos.affected[,-which(colSums(df.genos.affected)==0)]
-
+  
+  #This code line works only when we have at least one column with the expected condition, alternatively we use dplyr::select
+  #df.genos.affected = df.genos.affected[,-which(colSums(df.genos.affected)==0)]
+  
+  df.genos.affected = df.genos.affected %>% dplyr::select(-which(colSums(df.genos.affected, na.rm = T)==0))
+  
   df.genos.affected$pedigree = fam[affected,"V1"]
 
-  df.genos.agg.by.fam = aggregate(.~pedigree,df.genos.affected, sum)
+  df.genos.agg.by.fam = aggregate(.~pedigree,df.genos.affected, sum, na.rm=T ,na.action = NULL)
 
   index_null_fam = which(rowSums(df.genos.agg.by.fam[,-1])==0)
-  if(length(index_null_fam) > 0) df.genos.agg.by.fam = df.genos.agg.by.fam[-index_null_fam,]
+  if(length(index_null_fam) > 0) df.genos.agg.by.fam = df.genos.agg.by.fam[-index_null_fam,,drop=F]
 
-  locus.col = as.numeric(gsub("X", "", colnames(df.genos.agg.by.fam[,-1])))
+  locus.col = as.numeric(gsub("X", "", colnames(df.genos.agg.by.fam[,-1,drop=F])))
 
   return(list("ped_agg"=df.genos.agg.by.fam, "index_variants"=locus.col))
 
