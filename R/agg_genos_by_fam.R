@@ -23,8 +23,10 @@ agg.genos.by.fam = function(pedfile){
   df.genos = data.frame(do.call("cbind",lapply(seq(2, ncol(genos),2), function(x){
     rowSums(genos[,c(x-1,x)])
   })))
-
-  df.genos.affected = df.genos[affected,]
+  
+  colnames(df.genos) = paste0("X", 1:ncol(df.genos))
+  
+  df.genos.affected = df.genos[affected,,drop=F]
   df.genos.affected = data.frame(t(unique(t(df.genos.affected))))
   df.genos.affected[df.genos.affected==2] = 1
   
@@ -37,7 +39,7 @@ agg.genos.by.fam = function(pedfile){
 
   df.genos.agg.by.fam = aggregate(.~pedigree,df.genos.affected, sum, na.rm=T ,na.action = NULL)
 
-  index_null_fam = which(rowSums(df.genos.agg.by.fam[,-1])==0)
+  index_null_fam = which(rowSums(df.genos.agg.by.fam[,-1,drop=F])==0)
   if(length(index_null_fam) > 0) df.genos.agg.by.fam = df.genos.agg.by.fam[-index_null_fam,,drop=F]
 
   locus.col = as.numeric(gsub("X", "", colnames(df.genos.agg.by.fam[,-1,drop=F])))
