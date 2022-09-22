@@ -33,7 +33,7 @@ compute.Burden.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_ann
 
   ped_agg = aggregate.geno.by.fam$ped_agg
   
-  W_mat = diag(W, nrow=nrow(Z_annot), ncol=nrow(Z_annot))
+  W_mat = diag(W, nrow=length(W), ncol=length(W))
   W_sub = W_mat[aggregate.geno.by.fam$index_variants,aggregate.geno.by.fam$index_variants]
   
   Expected = null.value.by.fam[,c("FamID", "Expected")]
