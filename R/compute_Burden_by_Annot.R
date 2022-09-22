@@ -8,7 +8,7 @@
 #'@param null.value.by.fam is a dataframe with four colums (FamID, Expected, Variance and Covariance) return by compute.null function
 #'@param aggregate.geno.by.fam is the list returned by aggregate.geno.by.fam function
 #'@param Z_annot is a p*q matrix of functional annotations. The first column should be composed only with ones
-#'@param W is a p*p matrix of weights. Should be a identity matrix when unweighted version is needed.
+#'@param W is a vector of weights. Should be a unitary vector when unweighted version is needed.
 #'
 #'@return a list with each score by annotation
 #'@export
@@ -32,9 +32,10 @@ compute.Burden.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_ann
   }
 
   ped_agg = aggregate.geno.by.fam$ped_agg
-
-  W_sub = W[aggregate.geno.by.fam$index_variants,aggregate.geno.by.fam$index_variants]
-
+  
+  W_mat = diag(W, nrow=nrow(Z_annot), ncol=nrow(Z_annot))
+  W_sub = W_mat[aggregate.geno.by.fam$index_variants,aggregate.geno.by.fam$index_variants]
+  
   Expected = null.value.by.fam[,c("FamID", "Expected")]
 
   split_G_agg_by_fam = split(ped_agg, 1:nrow(ped_agg))
