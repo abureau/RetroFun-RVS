@@ -7,7 +7,7 @@
 #'@param null.value.by.fam is a dataframe with four colums (FamID, Expected, Variance and Covariance) return by compute.null function
 #'@param aggregate.geno.by.fam is the list returned by aggregate.geno.by.fam function
 #'@param Z_annot is a p*q matrix of functional annotations. The first column should be composed only with ones
-#'@param W is a p*p matrix of weights. Should be a identity matrix when unweighted version is needed.
+#'@param W is a vector of weights. Should be a unitary vector when unweighted version is needed.
 #'@param independence is a boolean. Default value is FALSE. If variant independence can be assumed, use independence=TRUE.
 #'
 #'@return a list with each variance by annotation
@@ -31,8 +31,8 @@ compute.Var.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,
     if(min(Z_annot)< 0) Z_annot = Z_annot-min(Z_annot)
     else Z_annot = Z_annot
   }
-
-  Wz = W%*%Z_annot
+  W_mat = diag(W, nrow=length(W), ncol=length(W))
+  Wz = W_mat%*%Z_annot
   Wz_sub = Wz[aggregate.geno.by.fam$index_variants,]
 
   for(col_A in 1:ncol(Wz_sub)){
