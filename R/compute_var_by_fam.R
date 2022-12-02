@@ -69,7 +69,7 @@ compute.var.by.fam = function(configs.with.probs, inbreeding=FALSE){
   }
 
   else{
-    print("Please provide TRUE or FALSE for the inbreeding parameter...")
+    stop("Please provide TRUE or FALSE for the inbreeding parameter...")
   }
 
 }
