@@ -1,28 +1,75 @@
 #'Function computing the theoretical variance and covariance for each family
 #'
-#' @param config.by.fam a list with configuration by family
-#' @param sharing.proba.by.fam a list with sharing probabilities by family
+#' @param configs.with.probs a list with configurations and corresponding probabilities by family
+#' @param inbreeding a boolean: TRUE when inbreeding among family members is expected, FALSE otherwise
+#' @return a dataframe with the genotype variance for each family
 #'
-#' @return a dataframe with Famid, variance and covariance
-compute.var.by.fam = function(config.by.fam, sharing.proba.by.fam){
+compute.var.by.fam = function(configs.with.probs, inbreeding=FALSE){
 
-  var = sapply(names(config.by.fam), function(famid){
-    sum(config.by.fam[[famid]]^2*sharing.proba.by.fam[[famid]]) -
-      sum(config.by.fam[[famid]] * sharing.proba.by.fam[[famid]])^2
-  })
 
-  covar=sapply(names(config.by.fam), function(famid)
-  {
-    joint = outer(sharing.proba.by.fam[[famid]],sharing.proba.by.fam[[famid]],pmin)/sum(outer(sharing.proba.by.fam[[famid]],sharing.proba.by.fam[[famid]],pmin))
-    marginal = apply(joint,1,sum)
-    moy = sum(config.by.fam[[famid]]*marginal)
-    sum(outer(config.by.fam[[famid]],config.by.fam[[famid]],"*")*joint) - moy^2
-  })
+  if(inbreeding==FALSE){
 
-  covar=pmin(covar, var)
 
-  df_var = data.frame("FamID"=names(config.by.fam), "Var"=var)
-  df_covar = data.frame("FamID"=names(config.by.fam), "CoVar"=covar)
+    var.all.fam = sapply(configs.with.probs, function(x){
+      config.fam = x$configs
+      proba.fam = x$probs
 
-  return(merge(df_var, df_covar, by="FamID"))
+      var = sum(config.fam^2*proba.fam) -
+        sum(config.fam * proba.fam)^2
+
+    })
+
+
+    covar.all.fam = sapply(configs.with.probs, function(x){
+
+      config.fam = x$configs
+      proba.fam = x$probs
+
+      joint = outer(proba.fam,proba.fam,pmin)/sum(outer(proba.fam,proba.fam,pmin))
+      marginal = apply(joint,1,sum)
+      moy = sum(config.fam*marginal)
+      sum(outer(config.fam,config.fam,"*")*joint) - moy^2
+    })
+
+    covar.all.fam=pmin(covar.all.fam, var.all.fam)
+
+    df_var = data.frame("FamID"=names(configs.with.probs), "Var"=var.all.fam)
+    df_covar = data.frame("FamID"=names(configs.with.probs), "CoVar"=covar.all.fam)
+
+    return(merge(df_var, df_covar, by="FamID"))
+  }
+
+  else if(inbreeding==TRUE){
+
+
+    var.all.fam = sapply(configs.with.probs, function(x) {
+      config = unlist(sapply(x, function(y) y$configs))
+      proba = unlist(sapply(x, function(y) y$probs))
+      sum(config ^ 2 * proba) - sum(config * proba)^2
+    })
+
+    covar.all.fam = sapply(configs.with.probs, function(x) {
+
+      config = unlist(sapply(x, function(y) y$configs))
+      proba = unlist(sapply(x, function(y) y$probs))
+      joint = outer(proba,proba,pmin)/sum(outer(proba,proba,pmin))
+      joint[is.nan(joint)] = 0
+      marginal = apply(joint,1,sum)
+      moy = sum(config*marginal)
+      covar = sum(outer(config,config,"*")*joint) - moy^2
+      covar
+    })
+
+    covar.all.fam = pmin(var.all.fam, covar.all.fam)
+    df_var = data.frame("FamID"=names(configs.with.probs), "Var"=var.all.fam)
+    df_covar = data.frame("FamID"=names(configs.with.probs), "CoVar"=covar.all.fam)
+
+    return(merge(df_var, df_covar, by="FamID"))
+
+  }
+
+  else{
+    print("Please provide TRUE or FALSE for the inbreeding parameter...")
+  }
+
 }
