@@ -54,7 +54,7 @@ compute.null = function(pedigree, inbreeding = FALSE, cryptic.relatedness=FALSE,
             })
           }
           else{
-            print("Please provide a correct value for the kinship coeff ...")
+            stop("Please provide a correct value for the kinship coeff ...")
           }
 
         }
@@ -98,7 +98,7 @@ compute.null = function(pedigree, inbreeding = FALSE, cryptic.relatedness=FALSE,
             })
           }
           else{
-            print("Please provide a correct value for the kinship coeff ...")
+            stop("Please provide a correct value for the kinship coeff ...")
           }
           return(config_probs)
         }
@@ -145,7 +145,7 @@ compute.null = function(pedigree, inbreeding = FALSE, cryptic.relatedness=FALSE,
             })
           }
           else{
-            print("Please provide a correct value for the kinship coeff ...")
+            stop("Please provide a correct value for the kinship coeff ...")
           }
 
         }
@@ -189,7 +189,7 @@ compute.null = function(pedigree, inbreeding = FALSE, cryptic.relatedness=FALSE,
             })
           }
           else{
-            print("Please provide a correct value for the kinship coeff ...")
+            stop("Please provide a correct value for the kinship coeff ...")
           }
           return(config_probs)
         }
