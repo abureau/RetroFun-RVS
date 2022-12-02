@@ -25,7 +25,7 @@ compute.expected.by.fam = function(configs.with.probs, inbreeding=FALSE){
     return(data.frame("FamID" = names(configs.with.probs), "Expected" = expected))
   }
   else{
-    print("Please provide TRUE or FALSE for the inbreeding parameter...")
+    stop("Please provide TRUE or FALSE for the inbreeding parameter...")
   }
   
   
