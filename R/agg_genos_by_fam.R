@@ -68,6 +68,9 @@ agg.genos.by.fam = function(pedfile, correction=c("none","replace","remove")){
 
   locus.col = as.numeric(gsub("X", "", colnames(df.genos.agg.by.fam[,-1,drop=FALSE])))
 
+  attributes(df.genos.agg.by.fam)$correction = correction
   return(list("ped_agg"=df.genos.agg.by.fam, "index_variants"=locus.col))
 
 }
+
+
