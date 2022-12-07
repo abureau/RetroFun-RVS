@@ -140,4 +140,3 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
   return(merge(expected, var.covar, by="FamID"))
 }
 
-compute.null(myPedTrimmed, distinguishHomo = F, cryptic.relatedness = F)
