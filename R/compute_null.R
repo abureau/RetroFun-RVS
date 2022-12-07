@@ -18,11 +18,7 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
 
 
   #Check for consanguinity and correction parameters provided by the user
-  if(length(.check.consanguinity(pedigree)) == 0 & distinguishHomo == TRUE){
-    warning("No consanguinity is expected among pedigrees, distinguishHomo == FALSE should be provided...")
-  }
-
-  else if(length(.check.consanguinity(pedigree)) > 0 & distinguishHomo == FALSE){
+  if(length(.check.consanguinity(pedigree)) > 0 & distinguishHomo == FALSE){
     warning(paste0("Consanguinity is expected in family ", .check.consanguinity(pedigree), " distinguishHomo == TRUE should be provided..."))
 
   }
@@ -39,13 +35,14 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
     for(i in 1:length(carriers)){
       carrier.sets = c(carrier.sets, combn(carriers,i,simplify=FALSE))
     }
-    #Scenario 1: No inbreeding
-    if(distinguishHomo==FALSE){
+
+    #Scenario 1: No consanguinity
+    if(distinguishHomo == FALSE){
 
       configs = sapply(carrier.sets, length)
 
-      #Scenario 1-1: No inbreeding + No cryptic relatedness
-      if(cryptic.relatedness==FALSE){
+      #Scenario 1-1: No consanguinity + No cryptic relatedness
+      if(cryptic.relatedness == FALSE){
 
         probs = sapply(carrier.sets, function(vec) {
           number.of.carriers = length(vec)
@@ -53,13 +50,13 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
         })
       }
 
-      #Scenario 1-2: No inbreeding + Cryptic relatedness
+      #Scenario 1-2: No consanguinity + Cryptic relatedness
       else if(cryptic.relatedness==TRUE){
 
         if(!is.null(kinshipCoeff)){
           probs = sapply(carrier.sets, function(vec) {
             number.of.carriers = length(vec)
-            RVS::RVsharing(pedigree[[fam]], carriers=vec,useAffected = TRUE, kinshipCoeff=kinshipCoeff,kinshipOrder=nf%/%2+1)
+            RVS::RVsharing(pedigree[[fam]], carriers=vec,useAffected = TRUE, kinshipCoeff=kinshipCoeff, kinshipOrder=nf%/%2+1, distinguishHomo = TRUE)
           })
         }
         else{
@@ -72,10 +69,10 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
 
     }
 
-    #Scenario 2: Inbreeding
+    #Scenario 2: Consanguinity
     else if (distinguishHomo == TRUE){
 
-      #Scenario 2-1: Inbreeding + No cryptic relatedness
+      #Scenario 2-1: Consanguinity + No cryptic relatedness
       if(cryptic.relatedness==FALSE){
         config_probs = lapply(carrier.sets, function(vec) {
           number.of.carriers = length(vec)
@@ -90,7 +87,7 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
         })
         return(config_probs)
       }
-      #Scenario 2-2: Inbreeding + Cryptic relatedness
+      #Scenario 2-2: Consanguinity + Cryptic relatedness
       else if(cryptic.relatedness==TRUE){
 
         if(!is.null(kinshipCoeff)){
@@ -125,14 +122,13 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
     l = l[fam.ids]
   }
 
-
-  if(distinguishHomo==TRUE){
+  if(distinguishHomo==TRUE | cryptic.relatedness==TRUE){
 
     expected = compute.expected.by.fam(l, distinguishHomo=TRUE)
     var.covar = compute.var.by.fam(l, distinguishHomo=TRUE)
   }
 
-  else if (distinguishHomo==FALSE){
+  else if (distinguishHomo==FALSE & cryptic.relatedness==FALSE){
     expected = compute.expected.by.fam(l, distinguishHomo=FALSE)
     var.covar = compute.var.by.fam(l, distinguishHomo=FALSE)
   }
