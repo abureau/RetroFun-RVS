@@ -13,11 +13,16 @@ usethis::use_package("ACAT")
 #'@return a data.frame of p-values for each score by annotation. ACAT and Fisher combined p-values are computed.
 #'@export
 
-RetroFun.RVS = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W, independence=F){
+RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, independence=FALSE){
+
+  if(.check.parameters.agg.null(null.value.by.fam, aggregate.geno.by.fam)%in%c(1,2)){
+    warning("Correction parameters are not consistent with options provided for cryptic relatedness or consanguinity, please check ...")
+  }
+
   Burden.Stat = compute.Burden.by.Annot(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W)$B
   Var.Stat = unlist(compute.Var.by.Annot(null.value.by.fam,aggregate.geno.by.fam,Z_annot,W,independence = independence))
 
-  p = pchisq(Burden.Stat/Var.Stat,1,lower.tail = F)
+  p = pchisq(Burden.Stat/Var.Stat,1,lower.tail = FALSE)
 
   df.p=data.frame(p)
   colnames(df.p) = paste0("Score",1:length(p))
