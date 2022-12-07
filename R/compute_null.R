@@ -133,6 +133,9 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
     var.covar = compute.var.by.fam(l, distinguishHomo=FALSE)
   }
 
-  return(merge(expected, var.covar, by="FamID"))
+  df.expected.var.covar = merge(expected, var.covar, by="FamID")
+  attributes(df.expected.var.covar)$distinguishHomo = distinguishHomo
+
+  return(df.expected.var.covar)
 }
 
