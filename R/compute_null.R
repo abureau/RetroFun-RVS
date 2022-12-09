@@ -26,11 +26,11 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
 
   }
   else if(length(.check.consanguinity(pedigree)) == 0 & distinguishHomo == TRUE & cryptic.relatedness == FALSE){
-    warning("No consanguinity within pedigrees, please set distinguishHomo = FALSE ...")
+    warning("No consanguinity and no cryptic relatedness within pedigrees, please set distinguishHomo = FALSE ...")
   }
 
-  else if(length(.check.consanguinity(pedigree)) > 0 & distinguishHomo == FALSE & cryptic.relatedness == TRUE){
-    warning("Consanguinity within pedigrees, the paramter choice is not optimal, please set distinguishHomo = TRUE ... ")
+  if(distinguishHomo == FALSE & cryptic.relatedness == TRUE){
+    warning("In presence of cryptic relatedness, the parameter choice distinguishHomo = FALSE is not optimal, please set distinguishHomo = TRUE ... ")
   }
 
   l = lapply(names(pedigree), function(fam){
