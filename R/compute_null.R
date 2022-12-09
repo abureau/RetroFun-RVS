@@ -16,11 +16,21 @@
 
 compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=FALSE, kinshipCoeff=NULL, fam.ids=NULL){
 
+  if(!distinguishHomo%in%c(TRUE,FALSE) | !cryptic.relatedness%in%c(TRUE,FALSE) ){
+    stop("distinguishHomo or cryptic.relatedness parameters were not well set, please check ...")
+  }
 
   #Check for consanguinity and correction parameters provided by the user
   if(length(.check.consanguinity(pedigree)) > 0 & distinguishHomo == FALSE){
-    warning(paste0("Consanguinity is expected in family ", .check.consanguinity(pedigree), " distinguishHomo == TRUE should be provided..."))
+    warning(paste0("Consanguinity within pedigrees ", .check.consanguinity(pedigree), " distinguishHomo = TRUE should be provided ..."))
 
+  }
+  else if(length(.check.consanguinity(pedigree)) == 0 & distinguishHomo == TRUE & cryptic.relatedness == FALSE){
+    warning("No consanguinity within pedigrees, please set distinguishHomo = FALSE ...")
+  }
+
+  else if(length(.check.consanguinity(pedigree)) > 0 & distinguishHomo == FALSE & cryptic.relatedness == TRUE){
+    warning("Consanguinity within pedigrees, the paramter choice is not optimal, please set distinguishHomo = TRUE ... ")
   }
 
   l = lapply(names(pedigree), function(fam){
@@ -104,7 +114,7 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
           })
         }
         else{
-          stop("Please provide a correct value for the kinship coeff ...")
+          stop("Please provide a correct value for the kinship coefficient ...")
         }
         return(config_probs)
       }
@@ -122,16 +132,8 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
     l = l[fam.ids]
   }
 
-  if(distinguishHomo==TRUE | cryptic.relatedness==TRUE){
-
-    expected = compute.expected.by.fam(l, distinguishHomo=TRUE)
-    var.covar = compute.var.by.fam(l, distinguishHomo=TRUE)
-  }
-
-  else if (distinguishHomo==FALSE & cryptic.relatedness==FALSE){
-    expected = compute.expected.by.fam(l, distinguishHomo=FALSE)
-    var.covar = compute.var.by.fam(l, distinguishHomo=FALSE)
-  }
+  expected = compute.expected.by.fam(l, distinguishHomo=distinguishHomo, cryptic.relatedness=cryptic.relatedness)
+  var.covar = compute.var.by.fam(l, distinguishHomo=distinguishHomo, cryptic.relatedness=cryptic.relatedness)
 
   df.expected.var.covar = merge(expected, var.covar, by="FamID")
   attributes(df.expected.var.covar)$distinguishHomo = distinguishHomo

@@ -1,13 +1,14 @@
 #'Function computing the theoretical variance and covariance for each family
 #'
 #' @param configs.with.probs a list with configurations and corresponding probabilities by family
-#' @param inbreeding a boolean: TRUE when inbreeding among family members is expected, FALSE otherwise
+#' @param distinguishHomo a boolean: TRUE when inbreeding among family members is expected, FALSE otherwise
+#' #' @param cryptic.relatedness a boolean: TRUE when cryptic relatedness is expected, FALSE otherwise
 #' @return a dataframe with the genotype variance for each family
 #'
-compute.var.by.fam = function(configs.with.probs, inbreeding=FALSE){
+compute.var.by.fam = function(configs.with.probs, distinguishHomo=FALSE, cryptic.relatedness=FALSE){
 
 
-  if(inbreeding==FALSE){
+  if(distinguishHomo==FALSE & cryptic.relatedness==FALSE){
 
 
     var.all.fam = sapply(configs.with.probs, function(x){
@@ -39,7 +40,7 @@ compute.var.by.fam = function(configs.with.probs, inbreeding=FALSE){
     return(merge(df_var, df_covar, by="FamID"))
   }
 
-  else if(inbreeding==TRUE){
+  else if(distinguishHomo==TRUE | cryptic.relatedness==TRUE){
 
 
     var.all.fam = sapply(configs.with.probs, function(x) {
@@ -66,10 +67,6 @@ compute.var.by.fam = function(configs.with.probs, inbreeding=FALSE){
 
     return(merge(df_var, df_covar, by="FamID"))
 
-  }
-
-  else{
-    stop("Please provide TRUE or FALSE for the inbreeding parameter...")
   }
 
 }
