@@ -1,5 +1,3 @@
-usethis::use_dev_package("ACAT")
-
 #' Compute the p-values associated with each functional annotation
 #'
 #'This function computes both the ACAT-combined and Fisher's method p-values
