@@ -1,4 +1,4 @@
-usethis::use_dev_package("ACAT", remote= "github::yaowuliu/ACAT")
+usethis::use_dev_package("ACAT")
 
 #' Compute the p-values associated with each functional annotation
 #'
