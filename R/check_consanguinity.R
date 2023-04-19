@@ -56,6 +56,24 @@
     return(which(ped.consanguinity))
   }
 
+  else if(class(pedigree) == "pedigree"){
+
+    df.ped = kinship2::as.data.frame.pedigree(pedigree)
+
+    couple = unique(df.ped[df.ped$dadid!=0,c("dadid","momid")])
+    kinship.mat = kinship2::kinship(pedigree)
+
+    consanguinity.coeff = c()
+    for(i in 1:nrow(couple)){
+      dadid = as.character(couple$dadid[i])
+      momid = as.character(couple$momid[i])
+
+      consanguinity.coeff = c(consanguinity.coeff,kinship.mat[dadid,momid])
+    }
+
+    return(any(consanguinity.coeff>0))
+  }
+
 }
 
 
