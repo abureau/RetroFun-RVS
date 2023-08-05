@@ -1,5 +1,3 @@
-# usethis::use_package("RVS")
-
 #' Compute the null value for pedigrees
 #'
 #' This function computes the genotype null value for one or more families. It assumes that the

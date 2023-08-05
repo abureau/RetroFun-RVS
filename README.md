@@ -4,6 +4,13 @@
 RetroFun-RVS is a family-based burden test permitting the integration of functional annotations. One of the critical feature of the method is to consider only affected members across families.
 
 ## Package installation
+
+Before installing RetroFunRVS, ACAT and RVS development packages used as dependencies should be installed using:
+``
+devtools::install_github("sherman5/RVS@HomozygRV")
+devtools::install_github("yaowuliu/ACAT")
+``
+
 RetroFunRVS can be installed using 
 ``
 devtools::install_github("lmangnier/RetroFun-RVS", force=T)

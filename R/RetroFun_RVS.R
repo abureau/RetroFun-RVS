@@ -1,4 +1,4 @@
-usethis::use_package("ACAT")
+
 
 #' Compute the p-values associated with each functional annotation
 #'
