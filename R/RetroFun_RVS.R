@@ -25,8 +25,9 @@ RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, in
   p = pchisq(Burden.Stat/Var.Stat,1,lower.tail = FALSE)
 
   df.p=data.frame(p)
-  colnames(df.p) = paste0("Score",1:length(p))
-
+#  colnames(df.p) = paste0("Score",1:length(p))
+  colnames(df.p) = paste0("Score_",colnames(Z_annot))
+  
   df.p$ACAT = apply(df.p,1,function(x) ACAT::ACAT(x[!is.nan(x)]))
   df.p$Fisher = apply(df.p,1, function(x){
     pchisq(-2*sum(log(x[!is.nan(x)])),2* length(x[!is.nan(x)]), lower.tail = F)
