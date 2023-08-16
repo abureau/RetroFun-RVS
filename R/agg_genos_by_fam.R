@@ -7,15 +7,24 @@
 #'The six first columns must be family id, individual id, father and mother ids, sex and phenotype
 #'Homozyguous variants are replaced by their heterozyguous configurations.
 #'
-#'@param pedfile is a genotype file in ped format: A path to a .ped file
+#'@param pedfile.path is a genotype file in ped format: A path to a .ped file
+#'@param pedfile a data.frame corresponding to genotype by family
 #'@param correction a string corresponding to the applied correction, none when no correction is applied
 #'replace when homozyguous configurations are replaced by their corresponding heterozyguous configurations, remove when variants with
 #'at least one homozyguous configurations
 #'@return A list with the ped file corrected and aggregated by family and index each variants observed in families
 #'@export
 
-agg.genos.by.fam = function(pedfile, correction=c("none","replace","remove")){
-  p = read.table(pedfile, header = FALSE)
+agg.genos.by.fam = function(pedfile.path, pedfile=NULL, correction=c("none","replace","remove")){
+  if(is.null(pedfile) & !is.null(pedfile.path)){
+    p = read.table(pedfile.path, header = FALSE)
+  }
+  
+  else if(!is.null(pedfile) & is.null(pedfile.path)){
+    p=pedfile
+  }
+  
+  
   fam = p[,1:6]
   affected = which(fam$V6==2)
   genos = p[,7:ncol(p)]
