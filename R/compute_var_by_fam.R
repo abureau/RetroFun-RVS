@@ -53,11 +53,28 @@ compute.var.by.fam = function(configs.with.probs, distinguishHomo=FALSE, cryptic
 
       config = unlist(sapply(x, function(y) y$configs))
       proba = unlist(sapply(x, function(y) y$probs))
-      joint = outer(proba,proba,pmin)/sum(outer(proba,proba,pmin))
-      joint[is.nan(joint)] = 0
-      marginal = apply(joint,1,sum)
+      # En présence de probabilités ex aequo, le calcul de la somme de la matrice fonctionne
+      # seulement avec la méthode "average" et le calcul de la somme de chaque ligne
+      # (distribution marginale) seulement avec la méthode "min". Ce n'est pas clair pourquoi.
+      rang = rank(proba,ties.method="average")
+      rang.min = rank(proba,ties.method="min")
+      lproba = length(proba)
+      # Somme de la matrice du minimum par paire d'éléments de proba (outer(proba,proba,pmin))
+      sm = sum((2*(lproba-rang)+1)*proba)
+      # La prochaine instruction n'est pas conservée. Est-ce que des NaN peuvent arriver?
+      #      joint[is.nan(joint)] = 0
+      # Somme des ligne de la matrice du minimum par paire d'éléments de proba
+      marginal = numeric(lproba)
+      for (l in 1:lproba)
+      {
+        marginal[l] = ((lproba-rang.min[l]+1)*proba[l] + sum(proba[rang.min<rang.min[l]]))/sm
+      }
       moy = sum(config*marginal)
-      covar = sum(outer(config,config,"*")*joint) - moy^2
+      # Somme du produit "extérieur" de config multiplié élément-par-élément avec la matrice joint (sum(outer(config,config,"*")*joint))
+      covar = 0
+      for (l in 1:lproba)
+        covar = covar + sum(config[l]*config * ifelse(proba[l]<proba,proba[l],proba)/sm)
+      covar = covar - moy^2
       covar
     })
 

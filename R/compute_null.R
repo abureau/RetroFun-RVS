@@ -334,6 +334,8 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
 
     l = l[fam.ids]
   }
+
+
   expected = compute.expected.by.fam(l, distinguishHomo=distinguishHomo, cryptic.relatedness=cryptic.relatedness)
   var.covar = compute.var.by.fam(l, distinguishHomo=distinguishHomo, cryptic.relatedness=cryptic.relatedness)
 
