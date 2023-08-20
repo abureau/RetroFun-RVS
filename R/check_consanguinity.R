@@ -37,10 +37,10 @@
     famid = unique(pedigree$famid)
 
     for(ped in famid){
-      df.ped = kinship2::as.data.frame.pedigree(pedigree[ped])
+      df.ped = kinship2::as.data.frame.pedigree(pedigree[as.character(ped)])
 
       couple = unique(df.ped[df.ped$dadid!=0,c("dadid","momid")])
-      kinship.mat = kinship2::kinship(pedigree[ped])
+      kinship.mat = kinship2::kinship(pedigree[as.character(ped)])
 
       consanguinity.coeff = c()
       for(i in 1:nrow(couple)){
