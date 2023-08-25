@@ -23,14 +23,15 @@ RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, in
   p = pchisq(Burden.Stat/Var.Stat,1,lower.tail = FALSE)
 
   df.p=data.frame(p)
-#  colnames(df.p) = paste0("Score",1:length(p))
-
+  #colnames(df.p) = paste0("Score",1:length(p))
+  
   if(length(p)==1){
     colnames(df.p) = "Burden"
-    df.p$ACAT = ACAT::ACAT(df.p[,1,drop=FALSE][!is.nan(df.p[,1,drop=FALSE])])
+    df.p$ACAT = ACAT::ACAT(df.p$Burden)
 
-    df.p$Fisher = pchisq(-2*sum(log(df.p[,1,drop=FALSE][!is.nan(df.p[,1,drop=FALSE])])),2* length(df.p[,1,drop=FALSE][!is.nan(df.p[,1,drop=FALSE])]), lower.tail = F)
+    df.p$Fisher = pchisq(-2*sum(log(df.p$Burden)),2* length(df.p$Burden), lower.tail = F)
     }
+  
   else{
     colnames(df.p) = paste0("Score_",colnames(Z_annot))
 
