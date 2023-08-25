@@ -70,7 +70,7 @@ agg.genos.by.fam = function(pedfile.path, pedfile=NULL, correction=c("none","rep
 
   df.genos.affected$pedigree = fam[affected,"V1"]
 
-  print(dim(df.genos.agg.by.fam))
+  print(dim(df.genos.affected))
   df.genos.agg.by.fam = aggregate(.~pedigree,df.genos.affected, sum, na.rm=TRUE ,na.action = NULL)
 
   index_null_fam = which(rowSums(df.genos.agg.by.fam[,-1,drop=FALSE])==0)
