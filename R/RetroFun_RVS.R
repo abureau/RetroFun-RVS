@@ -46,19 +46,18 @@ RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, in
   })
 
   if(contrib.by.fam==TRUE & contrib.by.var==TRUE){
-    return(list("Resuts"=df.p, "Stat.by.fam" = run.Burden$Stat.by.fam , "Stat.by.var" = run.Burden$Stat.by.var))
+    return(list("Results"=df.p, "Stat.by.fam" = run.Burden$Stat.by.fam , "Stat.by.var" = run.Burden$Stat.by.var))
   }
 
   else if(contrib.by.fam==TRUE & contrib.by.var==FALSE){
-    return(list("Resuts"=df.p, "Stat.by.fam" = run.Burden$Stat.by.fam ))
+    return(list("Results"=df.p, "Stat.by.fam" = run.Burden$Stat.by.fam ))
   }
 
   else if(contrib.by.fam==FALSE & contrib.by.var==TRUE){
-    return(list("Resuts"=df.p, "Stat.by.var" = run.Burden$Stat.by.var ))
+    return(list("Results"=df.p, "Stat.by.var" = run.Burden$Stat.by.var ))
   }
   else{
     return(df.p)
   }
     }
-  return(df.p)
 }
