@@ -25,10 +25,8 @@ RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, in
   p = pchisq(Burden.Stat/Var.Stat,1,lower.tail = FALSE)
 
   df.p=data.frame(p)
-<<<<<<< HEAD
   colnames(df.p) = paste0("Score_",colnames(Z_annot))
 
-=======
   #colnames(df.p) = paste0("Score",1:length(p))
   
   if(length(p)==1){
@@ -41,14 +39,11 @@ RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, in
   else{
     colnames(df.p) = paste0("Score_",colnames(Z_annot))
 
-  
->>>>>>> 3f091ac40ab6230c5928429783b534a661f92417
   df.p$ACAT = apply(df.p,1,function(x) ACAT::ACAT(x[!is.nan(x)]))
 
   df.p$Fisher = apply(df.p[,-ncol(df.p)],1, function(x){
     pchisq(-2*sum(log(x[!is.nan(x)])),2* length(x[!is.nan(x)]), lower.tail = F)
   })
-<<<<<<< HEAD
 
   if(contrib.by.fam==TRUE & contrib.by.var==TRUE){
     return(list("Resuts"=df.p, "Stat.by.fam" = run.Burden$Stat.by.fam , "Stat.by.var" = run.Burden$Stat.by.var))
@@ -64,9 +59,6 @@ RetroFun.RVS = function(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W, in
   else{
     return(df.p)
   }
-
-=======
     }
   return(df.p)
->>>>>>> 3f091ac40ab6230c5928429783b534a661f92417
 }
