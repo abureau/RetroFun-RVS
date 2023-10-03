@@ -33,7 +33,7 @@ compute.Var.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,
   }
   W_mat = diag(W, nrow=length(W), ncol=length(W))
   Wz = W_mat%*%Z_annot
-  Wz_sub = Wz[aggregate.geno.by.fam$index_variants,]
+  Wz_sub = Wz[aggregate.geno.by.fam$index_variants,,drop=FALSE]
 
   for(col_A in 1:ncol(Wz_sub)){
     Score_label = paste0("Score", col_A)
