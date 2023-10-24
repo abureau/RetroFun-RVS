@@ -41,6 +41,7 @@ compute.Var.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,
 
     cov_annot = c()
 
+    # Loop over the families
     for(r in 1:nrow(aggregate.geno.by.fam$ped_agg)){
       ped = aggregate.geno.by.fam$ped_agg[r,"pedigree"]
 
@@ -50,7 +51,7 @@ compute.Var.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,
       i = which(x>0)
       Wz_sub_annot_fam = Wz_sub_annot[i]
 
-      cov_tmp = NA
+      cov_tmp = NA # This seems useless to me, as cov_tmp is always assigned a value later
       var_tmp = sum(Wz_sub_annot_fam^2 * null.value.by.fam[null.value.by.fam$FamID==ped,"Var"])
 
       if(independence ==T){
@@ -60,6 +61,8 @@ compute.Var.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_annot,
         if(length(i)==1){
           cov_tmp = var_tmp } else{
             cw = combn(Wz_sub_annot_fam,2)
+            # If there is a single element in diff_x, that implies all variants are present in the same number of copies in the family 
+            # i.e. all variants are perfectly correlated in the family
             if(length(diff_x) ==1){
               cov_tmp = var_tmp + 2*sum(sapply(1:ncol(cw), function(c) prod(cw[,c]))) * null.value.by.fam[null.value.by.fam$FamID==ped,"Var"]
             } else{
