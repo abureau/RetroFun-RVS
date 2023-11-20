@@ -65,9 +65,9 @@ compute.Burden.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_ann
   Stat_by_var = sapply(1:length(S_by_var), function(x) sum(S_by_var[x]*Wz_sub[x,]))
   names(Stat_by_var) = colnames(ped_agg)[-1]
   #Contribution for each functional annotation
-  S_Wz = S_by_var%*%Wz_sub
+  Burden_by_annot = S_by_var%*%Wz_sub
 
-  Burden_by_annot = S_Wz^2
+  #Burden_by_annot = S_Wz^2
 
   if(contrib.by.fam==TRUE & contrib.by.var==TRUE){
     return(list("B"=Burden_by_annot, "Stat.by.fam" = Stat_by_fam , "Stat.by.var" = Stat_by_var))
