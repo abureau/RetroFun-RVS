@@ -10,13 +10,15 @@
 #'@param pedfile.path is a genotype file in ped format: A path to a .ped file
 #'@param pedfile a data.frame corresponding to genotype by family
 #'@param Z_annot is a p*q matrix of functional annotations. The first column should be composed only with ones
+#'@param exclude_annot vector of indices of the columns of the Z_annot matrix to exclude when computing 
+#'the maximal annotation for each variant (default = 1)
 #'@param correction a string corresponding to the applied correction, none when no correction is applied
 #'replace when homozyguous configurations are replaced by their corresponding heterozyguous configurations, remove when variants with
 #'at least one homozyguous configurations
 #'@return A list with the ped file corrected and aggregated by family and index each variants observed in families
 #'@export
 
-agg.genos.by.fam = function(pedfile.path, pedfile=NULL, Z_annot=NULL, correction=c("none","replace","remove")){
+agg.genos.by.fam = function(pedfile.path, pedfile=NULL, Z_annot=NULL, exclude_annot=1, correction=c("none","replace","remove")){
   if(is.null(pedfile) & !is.null(pedfile.path)){
     p = read.table(pedfile.path, header = FALSE)
   }
@@ -61,8 +63,8 @@ agg.genos.by.fam = function(pedfile.path, pedfile=NULL, Z_annot=NULL, correction
       {
         # Déterminer les copies de ce variant dupliqué
         copies = which(apply(df.genos.affected==df.genos.affected[,i],2,all))
-        # Calculer l'annotation maximale par variant (on exclut l'ordonnée à l'origine)
-        Zmax.copies = apply(Z_annot[copies,-1],1,max)
+        # Calculer l'annotation maximale par variant (on exclut certaines annotations comme l'ordonnée à l'origine)
+        Zmax.copies = apply(Z_annot[copies,-exclude_annot],1,max)
         # On garde le variant avec l'annotation maximale (ou le 1er variant avec l'annotation maximale s'il y en a plusieurs)
         var_to_keep = c(var_to_keep,copies[which.max(Zmax.copies)[1]])
         treated[copies] = TRUE
