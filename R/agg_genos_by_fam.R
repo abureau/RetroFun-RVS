@@ -64,7 +64,7 @@ agg.genos.by.fam = function(pedfile.path, pedfile=NULL, Z_annot=NULL, exclude_an
         # Déterminer les copies de ce variant dupliqué
         copies = which(apply(df.genos.affected==df.genos.affected[,i],2,all))
         # Calculer l'annotation maximale par variant (on exclut certaines annotations comme l'ordonnée à l'origine)
-        Zmax.copies = apply(Z_annot[copies,-exclude_annot],1,max)
+        Zmax.copies = apply(Z_annot[copies,-exclude_annot, drop=FALSE],1,max)
         # On garde le variant avec l'annotation maximale (ou le 1er variant avec l'annotation maximale s'il y en a plusieurs)
         var_to_keep = c(var_to_keep,copies[which.max(Zmax.copies)[1]])
         treated[copies] = TRUE
