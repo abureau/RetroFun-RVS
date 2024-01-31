@@ -4,12 +4,18 @@
 \alias{resample.genos.by.fam}
 \title{Function resampling genotypes by fam}
 \usage{
-resample.genos.by.fam(aggregate.geno.by.fam, prob_sharing_by_famid = NULL)
+resample.genos.by.fam(
+  agg.genos.by.fam,
+  n.unique.config.by.fam,
+  prob.sharing.by.fam = NULL
+)
 }
 \arguments{
-\item{aggregate.geno.by.fam}{a list return by aggregate.geno.by.fam}
+\item{agg.genos.by.fam}{a list return by agg.genos.by.fam}
 
-\item{prob_sharing_by_famid}{a list with the corresponding sharing probabilities for each genotype configurations in families}
+\item{n.unique.config.by.fam}{a list with the corresponding genotype configurations in each family}
+
+\item{prob.sharing.by.fam}{a list with the corresponding sharing probabilities for each genotype configuration}
 }
 \value{
 resample data.frame

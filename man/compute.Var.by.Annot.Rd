@@ -23,7 +23,7 @@ compute.Var.by.Annot(
 
 \item{Z_annot}{is a p*q matrix of functional annotations. The first column should be composed only with ones}
 
-\item{W}{is a p*p matrix of weights. Should be a identity matrix when unweighted version is needed.}
+\item{W}{is a vector of weights. Should be a unitary vector when unweighted version is needed.}
 
 \item{independence}{is a boolean. Default value is FALSE. If variant independence can be assumed, use independence=TRUE.}
 }

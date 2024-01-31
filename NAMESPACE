@@ -2,6 +2,7 @@
 
 export(RetroFun.RVS)
 export(agg.genos.by.fam)
+export(bootRetroFunRVS)
 export(compute.Burden.by.Annot)
 export(compute.Var.by.Annot)
 export(compute.null)

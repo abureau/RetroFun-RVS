@@ -9,7 +9,9 @@ RetroFun.RVS(
   aggregate.geno.by.fam,
   Z_annot,
   W,
-  independence = F
+  independence = FALSE,
+  contrib.by.fam = FALSE,
+  contrib.by.var = FALSE
 )
 }
 \arguments{
@@ -19,9 +21,13 @@ RetroFun.RVS(
 
 \item{Z_annot}{is a p*q matrix of functional annotations. The first column should be composed only with ones}
 
-\item{W}{is a p*p matrix of weights. Should be a identity matrix when an unweighted approach is needed.}
+\item{W}{is a vector of weights. Should be a unit vector when an unweighted approach is needed.}
 
 \item{independence}{is a boolean. Default value is FALSE. If variant independence can be assumed, use independence=TRUE.}
+
+\item{contrib.by.fam}{a boolean. If TRUE the function returns the weighted statistic by family}
+
+\item{contrib.by.var}{a boolean. If TRUE the function returns the weighted statistic by variant}
 }
 \value{
 a data.frame of p-values for each score by annotation. ACAT and Fisher combined p-values are computed.

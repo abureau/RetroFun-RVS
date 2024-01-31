@@ -4,10 +4,27 @@
 \alias{agg.genos.by.fam}
 \title{Aggregate genotypes among affected individuals for each family}
 \usage{
-agg.genos.by.fam(pedfile)
+agg.genos.by.fam(
+  pedfile.path,
+  pedfile = NULL,
+  Z_annot = NULL,
+  exclude_annot = 1,
+  correction = c("none", "replace", "remove")
+)
 }
 \arguments{
-\item{pedfile}{is a genotype file in ped format: A path to a .ped file}
+\item{pedfile.path}{is a genotype file in ped format: A path to a .ped file}
+
+\item{pedfile}{a data.frame corresponding to genotype by family}
+
+\item{Z_annot}{is a p*q matrix of functional annotations. The first column should be composed only with ones}
+
+\item{exclude_annot}{vector of indices of the columns of the Z_annot matrix to exclude when computing
+the maximal annotation for each variant (default = 1)}
+
+\item{correction}{a string corresponding to the applied correction, none when no correction is applied
+replace when homozyguous configurations are replaced by their corresponding heterozyguous configurations, remove when variants with
+at least one homozyguous configurations}
 }
 \value{
 A list with the ped file corrected and aggregated by family and index each variants observed in families

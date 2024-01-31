@@ -4,7 +4,14 @@
 \alias{compute.Burden.by.Annot}
 \title{Compute the Burden Statistic for q functional annotations}
 \usage{
-compute.Burden.by.Annot(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W)
+compute.Burden.by.Annot(
+  null.value.by.fam,
+  aggregate.geno.by.fam,
+  Z_annot,
+  W,
+  contrib.by.fam = FALSE,
+  contrib.by.var = FALSE
+)
 }
 \arguments{
 \item{null.value.by.fam}{is a dataframe with four colums (FamID, Expected, Variance and Covariance) return by compute.null function}
@@ -13,7 +20,11 @@ compute.Burden.by.Annot(null.value.by.fam, aggregate.geno.by.fam, Z_annot, W)
 
 \item{Z_annot}{is a p*q matrix of functional annotations. The first column should be composed only with ones}
 
-\item{W}{is a p*p matrix of weights. Should be a identity matrix when unweighted version is needed.}
+\item{W}{is a vector of weights. Should be a unitary vector when unweighted version is needed.}
+
+\item{contrib.by.fam}{a boolean. If TRUE the function returns the weighted statistic by family}
+
+\item{contrib.by.var}{a boolean. If TRUE the function returns the weighted statistic by variant}
 }
 \value{
 a list with each score by annotation

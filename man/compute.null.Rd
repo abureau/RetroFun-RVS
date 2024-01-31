@@ -4,12 +4,24 @@
 \alias{compute.null}
 \title{Compute the null value for pedigrees}
 \usage{
-compute.null(pedigree.configurations, pedigree.probas)
+compute.null(
+  pedigree,
+  distinguishHomo = FALSE,
+  cryptic.relatedness = FALSE,
+  kinshipCoeff = NULL,
+  fam.ids = NULL
+)
 }
 \arguments{
-\item{pedigree.configurations}{is all possible configurations for people having the risk allele: A list}
+\item{pedigree}{is a object of pedigree format}
 
-\item{pedigree.probas}{is all probabilities associated with all pedigree configurations: A list}
+\item{distinguishHomo}{a boolean: TRUE when inbreeding among family members is expected, FALSE otherwise}
+
+\item{cryptic.relatedness}{a boolean: TRUE when cryptic relatedness is expected, FALSE otherwise}
+
+\item{cryptic.coefficient}{an integer corresponding to the cryptic degree among founders}
+
+\item{fam}{a vector of family ids where inbreeding or cryptic relatedness may be computed}
 }
 \value{
 The expected genotype value, variance and covariance for each pedigree within a data.frame
