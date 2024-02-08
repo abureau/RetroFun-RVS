@@ -35,7 +35,7 @@ compute.Burden.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_ann
   ped_agg = aggregate.geno.by.fam$ped_agg
 
   W_mat = diag(W, nrow=length(W), ncol=length(W))
-  W_sub = W_mat[aggregate.geno.by.fam$index_variants,aggregate.geno.by.fam$index_variants]
+  W_sub = W_mat[aggregate.geno.by.fam$index_variants,aggregate.geno.by.fam$index_variants,drop=F]
 
   Expected = null.value.by.fam[,c("FamID", "Expected")]
 
@@ -55,7 +55,7 @@ compute.Burden.by.Annot = function(null.value.by.fam,aggregate.geno.by.fam,Z_ann
   #Sum over family for each variant
   S_by_var = colSums(diff_obs_expected_all_fam)
 
-  Wz_sub = W_sub%*%Z_annot[aggregate.geno.by.fam$index_variants,]
+  Wz_sub = W_sub%*%Z_annot[aggregate.geno.by.fam$index_variants,,drop=F]
 
   #Total Contribution by family across functional annotation
   Stat_by_fam = rowSums(as.matrix(diff_obs_expected_all_fam)%*%Wz_sub)
