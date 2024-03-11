@@ -12,10 +12,11 @@
 
 resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.sharing.by.fam=NULL){
 
+
   index_non_null = apply(agg.genos.by.fam$ped_agg[,-1,drop=FALSE],1,function(x) which(x>0))
 #  n_non_null = apply(agg.genos.by.fam$ped_agg[,-1],1,function(x) length(which(x>0)))
   n_non_null = sapply(index_non_null,length)
-    
+
   agg_tmp = agg.genos.by.fam
   agg_tmp_ped_agg = agg.genos.by.fam$ped_agg[,-1,drop=FALSE]
 
@@ -28,7 +29,15 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
     }
 
     else {
-      sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
+      #We firstly check whether n.unique.config.by.fam is sorted
+      config.isunsorted = is.unsorted(n.unique.config.by.fam)
+
+      if(config.issorted){
+        sample_geno = sample(sort(n.unique.config.by.fam[[famid]]),n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
+      } else {
+        sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
+
+      }
 
     }
 
