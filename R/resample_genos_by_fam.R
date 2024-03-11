@@ -32,7 +32,7 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
       #We firstly check whether n.unique.config.by.fam is sorted
       config.isunsorted = is.unsorted(n.unique.config.by.fam)
 
-      if(config.issorted){
+      if(config.isunsorted){
         sample_geno = sample(sort(n.unique.config.by.fam[[famid]]),n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
       } else {
         sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
