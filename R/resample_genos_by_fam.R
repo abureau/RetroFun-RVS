@@ -29,15 +29,11 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
     }
 
     else {
-      #We firstly check whether n.unique.config.by.fam is sorted
-      config.isunsorted = is.unsorted(n.unique.config.by.fam[[famid]])
+      #We firstly check whether n.unique.config.by.fam and prob.sharing.by.fam are sorted
+      n.unique.config.by.famid.sorted = sort(n.unique.config.by.fam[[famid]])
+      prob.sharing.by.famid.sorted = prob.sharing.by.fam[[famid]][order(as.numeric(names(prob.sharing.by.fam[[famid]])))]
 
-      if(config.isunsorted){
-        sample_geno = sample(sort(n.unique.config.by.fam[[famid]]),n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
-      } else {
-        sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
-
-      }
+      sample_geno = sample(n.unique.config.by.famid.sorted, n_non_null[x], replace=T, prob = prob.sharing.by.famid.sorted)
 
     }
 
@@ -48,3 +44,6 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
 
   return(agg_tmp)
 }
+
+resample.genos.by.fam(pedfiles_agg_null[[1]], n.unique.config.by.fam, prob.sharing.by.famid)
+prob.sharing.by.famid[[1]][order(as.numeric(names(prob.sharing.by.famid[[1]])))]
