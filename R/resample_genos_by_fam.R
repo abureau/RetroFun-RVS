@@ -12,6 +12,8 @@
 
 resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.sharing.by.fam=NULL){
 
+  if(any(names(n.unique.config.by.fam)!= names(prob.sharing.by.fam))) stop("Please provide n.unique.config.by.fam and prob.sharing.by.fam with the same family order")
+  if(is.null(names(prob.sharing.by.fam))) stop("Please provide a name for element list in prob.sharing.by.fam")
 
   index_non_null = apply(agg.genos.by.fam$ped_agg[,-1,drop=FALSE],1,function(x) which(x>0))
 #  n_non_null = apply(agg.genos.by.fam$ped_agg[,-1],1,function(x) length(which(x>0)))
