@@ -44,6 +44,3 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
 
   return(agg_tmp)
 }
-
-resample.genos.by.fam(pedfiles_agg_null[[1]], n.unique.config.by.fam, prob.sharing.by.famid)
-prob.sharing.by.famid[[1]][order(as.numeric(names(prob.sharing.by.famid[[1]])))]
