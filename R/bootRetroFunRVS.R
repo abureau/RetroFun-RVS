@@ -15,7 +15,8 @@
 bootRetroFunRVS = function(agg.genos.by.fam, n.unique.config.by.fam, Z_annot=NULL, W=NULL, prob.sharing.by.fam,nullval,nrep=1000)
 {
   if(is.null(Z_annot)) Z_annot = matrix(1, ncol=1, nrow=max(agg.genos.by.fam$index_variants))
-  if(is.null(W)) W = rep(1, nrow(Z_annot)) 
+  if(is.null(W)) W = rep(1, nrow(Z_annot))
+
 
   score = matrix(NA,nrep,ncol(Z_annot))
   # Loop over the bootstrap replicates
