@@ -12,11 +12,8 @@
 
 resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.sharing.by.fam=NULL){
 
-  if(any(names(n.unique.config.by.fam)!= names(prob.sharing.by.fam))) stop("Please provide n.unique.config.by.fam and prob.sharing.by.fam with the same family order")
-  if(is.null(names(prob.sharing.by.fam))) stop("Please provide a name for element list in prob.sharing.by.fam")
 
   index_non_null = apply(agg.genos.by.fam$ped_agg[,-1,drop=FALSE],1,function(x) which(x>0))
-#  n_non_null = apply(agg.genos.by.fam$ped_agg[,-1],1,function(x) length(which(x>0)))
   n_non_null = sapply(index_non_null,length)
 
   agg_tmp = agg.genos.by.fam
@@ -31,11 +28,7 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
     }
 
     else {
-      #We firstly check whether n.unique.config.by.fam and prob.sharing.by.fam are sorted
-      n.unique.config.by.famid.sorted = sort(n.unique.config.by.fam[[famid]])
-      prob.sharing.by.famid.sorted = prob.sharing.by.fam[[famid]][order(as.numeric(names(prob.sharing.by.fam[[famid]])))]
-
-      sample_geno = sample(n.unique.config.by.famid.sorted, n_non_null[x], replace=T, prob = prob.sharing.by.famid.sorted)
+      sample_geno = sample(n.unique.config.by.fam[[famid]], n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
 
     }
 
