@@ -31,3 +31,5 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
       sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
 
     }
+  }
+}
