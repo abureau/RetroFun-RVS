@@ -25,9 +25,7 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
 
     if(is.null(prob.sharing.by.fam[[famid]])){
       sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T)
-    }
-
-    else {
+    } else {
       sample_geno = sample(n.unique.config.by.fam[[famid]], n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
 
     }
