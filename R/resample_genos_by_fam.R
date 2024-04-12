@@ -30,5 +30,10 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
       sample_geno = sample(n.unique.config.by.fam[[famid]],n_non_null[x], replace=T, prob = prob.sharing.by.fam[[famid]])
 
     }
+    
+ agg_tmp_ped_agg[x,index_non_null[[x]]] = sample_geno
   }
+  agg_tmp_ped_agg = data.frame("pedigree"=agg_tmp$ped_agg[,1],agg_tmp_ped_agg)
+  agg_tmp$ped_agg = agg_tmp_ped_agg
+  return(agg_tmp)
 }

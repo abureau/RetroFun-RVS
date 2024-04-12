@@ -3,10 +3,10 @@
 #' This function computes the burden score on non-parametric bootstrap samples. Genotypes are resampled based on
 #' sharing probabilities
 #' @param agg.genos.by.fam a list return by agg.genos.by.fam
-#' @param n.unique.config.by.fam a list with the corresponding genotype configurations in each family
+#' @param n.unique.config.by.fam a list with the corresponding genotype configurations in each family, must be in the same order as prob.sharing.by.fam
 #' @param Z_annot a p*q matrix of functional annotations. The first column should be composed only with ones
 #' @param W a vector of weights. Should be a unitary vector when unweighted version is needed.
-#' @param prob.sharing.by.fam a list with the corresponding sharing probabilities for each genotype configuration
+#' @param prob.sharing.by.fam a list with the corresponding sharing probabilities for each genotype configuration, must be in the same order as n.unique.config.by.fam
 #' @param nullval a dataframe with four colums (FamID, Expected, Variance and Covariance) return by compute.null function
 #' @param nrep the number of bootstrap samples to generate
 #' @return a matrix of scores where each column is an annotation and each row is a bootstrap sample
