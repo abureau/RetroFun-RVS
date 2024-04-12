@@ -20,7 +20,6 @@ resample.genos.by.fam = function(agg.genos.by.fam, n.unique.config.by.fam, prob.
   agg_tmp = agg.genos.by.fam
   agg_tmp_ped_agg = agg.genos.by.fam$ped_agg[,-1,drop=FALSE]
 
-
   for(x in 1:length(agg_tmp$ped_agg$pedigree)){
     famid = as.character(agg_tmp$ped_agg$pedigree[x])
     if(is.null(prob.sharing.by.fam[[famid]])){
