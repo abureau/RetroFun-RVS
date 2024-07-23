@@ -18,7 +18,7 @@
 #'@return A list with the ped file corrected and aggregated by family and index each variants observed in families
 #'@export
 
-agg.genos.by.fam = function(pedfile.path, pedfile=NULL, Z_annot=NULL, exclude_annot=1, correction=c("none","replace","remove")){
+agg.genos.by.fam = function(pedfile.path=NULL, pedfile=NULL, Z_annot=NULL, exclude_annot=1, correction=c("none","replace","remove")){
   if(is.null(pedfile) & !is.null(pedfile.path)){
     p = read.table(pedfile.path, header = FALSE)
   }
@@ -29,7 +29,7 @@ agg.genos.by.fam = function(pedfile.path, pedfile=NULL, Z_annot=NULL, exclude_an
   
   
   fam = p[,1:6]
-  affected = which(fam$V6==2)
+  affected = which(fam[,6]==2)
   genos = p[,7:ncol(p)]
 
   genos[genos==1] = 0
