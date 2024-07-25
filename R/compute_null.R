@@ -7,7 +7,7 @@
 #' @param pedigree is a object of pedigree format
 #' @param distinguishHomo a boolean: TRUE when inbreeding among family members is expected, FALSE otherwise
 #' @param cryptic.relatedness a boolean: TRUE when cryptic relatedness is expected, FALSE otherwise
-#' @param cryptic.coefficient an integer corresponding to the cryptic degree among founders
+#' @param kinshipCoeff mean kinship coefficient among the pedigree founders
 #' @param fam a vector of family ids where inbreeding or cryptic relatedness may be computed
 #' @return The expected genotype value, variance and covariance for each pedigree within a data.frame
 #' @export
