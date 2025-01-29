@@ -13,7 +13,7 @@ devtools::install_github("yaowuliu/ACAT")
 
 RetroFunRVS can be installed using 
 ``
-devtools::install_github("lmangnier/RetroFun-RVS", force=T)
+devtools::install_github("abureau/RetroFun-RVS", force=T)
 ``
 
 ## Example 
@@ -21,7 +21,8 @@ devtools::install_github("lmangnier/RetroFun-RVS", force=T)
 An use case to illustrate core functions has been provided, please refer to the wiki or the package vignette.  
 
 ## Contact 
-For any questions, comments or suggestions, please contact Loic Mangnier at loic.mangnier@gmail.com
+For any questions, comments or suggestions, please contact Alexandre Bureau at alexandre.bureau@fmed.ulaval.ca
 ## Citation 
-RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations
-Loic Mangnier, Alexandre Bureau, bioRxiv 2022.06.21.497085; doi: https://doi.org/10.1101/2022.06.21.497085
+Mangnier L. et al. (2025) RetroFun-RVS: a retrospective family-based framework for rare variant analysis incorporating functional annotations.
+ Genetic Epidemiology 49:e70001, http://dx.doi.org/10.1002/gepi.70001
+
