@@ -2,25 +2,25 @@
 
 #' Check whether there is consanguinity among pedigrees
 #'
-#' @param pedigree is a pedigree of a pedigreeList format or list of pedigrees
+#' @param pedigrees is a pedigree of a pedigreeList format or list of pedigrees
 #'
 
-.check.consanguinity = function(pedigree){
+.check.consanguinity = function(pedigrees){
 
 
-  if(class(pedigree) == "list"){
+  if(class(pedigrees) == "list"){
     ped.consanguinity = c()
 
-    for(ped in 1:length(pedigree)){
-      df.ped = kinship2::as.data.frame.pedigree(pedigree[[ped]])
+    for(ped in 1:length(pedigrees)){
+      df.ped = kinship2::as.data.frame.pedigree(pedigrees[[ped]])
 
       couple = unique(df.ped[df.ped$dadid!=0,c("dadid","momid")])
-      kinship.mat = kinship2::kinship(pedigree[[ped]])
+      kinship.mat = kinship2::kinship(pedigrees[[ped]])
 
       consanguinity.coeff = c()
       for(i in 1:nrow(couple)){
-        dadid = couple$dadid[i]
-        momid = couple$momid[i]
+        dadid = as.character(couple$dadid[i])
+        momid = as.character(couple$momid[i])
 
         consanguinity.coeff = c(consanguinity.coeff,kinship.mat[dadid,momid ])
       }
@@ -32,15 +32,16 @@
   }
 
   else if (class(pedigree) == "pedigreeList"){
+  else if (class(pedigrees) == "pedigreeList"){
 
     ped.consanguinity = c()
-    famid = unique(pedigree$famid)
+    famid = unique(pedigrees$famid)
 
     for(ped in famid){
-      df.ped = kinship2::as.data.frame.pedigree(pedigree[as.character(ped)])
+      df.ped = kinship2::as.data.frame.pedigree(pedigrees[as.character(ped)])
 
       couple = unique(df.ped[df.ped$dadid!=0,c("dadid","momid")])
-      kinship.mat = kinship2::kinship(pedigree[as.character(ped)])
+      kinship.mat = kinship2::kinship(pedigrees[as.character(ped)])
 
       consanguinity.coeff = c()
       for(i in 1:nrow(couple)){
@@ -56,12 +57,12 @@
     return(which(ped.consanguinity))
   }
 
-  else if(class(pedigree) == "pedigree"){
+  else if(class(pedigrees) == "pedigree"){
 
-    df.ped = kinship2::as.data.frame.pedigree(pedigree)
+    df.ped = kinship2::as.data.frame.pedigree(pedigrees)
 
     couple = unique(df.ped[df.ped$dadid!=0,c("dadid","momid")])
-    kinship.mat = kinship2::kinship(pedigree)
+    kinship.mat = kinship2::kinship(pedigrees)
 
     consanguinity.coeff = c()
     for(i in 1:nrow(couple)){
