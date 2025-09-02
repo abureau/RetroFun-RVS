@@ -31,7 +31,6 @@
     return(which(ped.consanguinity))
   }
 
-  else if (class(pedigree) == "pedigreeList"){
   else if (class(pedigrees) == "pedigreeList"){
 
     ped.consanguinity = c()
