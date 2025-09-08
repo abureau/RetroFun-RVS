@@ -17,13 +17,13 @@ bootRetroFunRVS(
 \arguments{
 \item{agg.genos.by.fam}{a list return by agg.genos.by.fam}
 
-\item{n.unique.config.by.fam}{a list with the corresponding genotype configurations in each family}
+\item{n.unique.config.by.fam}{a list with the corresponding genotype configurations in each family, must be in the same order as prob.sharing.by.fam}
 
 \item{Z_annot}{a p*q matrix of functional annotations. The first column should be composed only with ones}
 
 \item{W}{a vector of weights. Should be a unitary vector when unweighted version is needed.}
 
-\item{prob.sharing.by.fam}{a list with the corresponding sharing probabilities for each genotype configuration}
+\item{prob.sharing.by.fam}{a list with the corresponding sharing probabilities for each genotype configuration, must be in the same order as n.unique.config.by.fam}
 
 \item{nullval}{a dataframe with four colums (FamID, Expected, Variance and Covariance) return by compute.null function}
 

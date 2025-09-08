@@ -19,7 +19,7 @@ compute.null(
 
 \item{cryptic.relatedness}{a boolean: TRUE when cryptic relatedness is expected, FALSE otherwise}
 
-\item{cryptic.coefficient}{an integer corresponding to the cryptic degree among founders}
+\item{kinshipCoeff}{mean kinship coefficient among the pedigree founders}
 
 \item{fam}{a vector of family ids where inbreeding or cryptic relatedness may be computed}
 }

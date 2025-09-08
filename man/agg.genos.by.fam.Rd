@@ -5,7 +5,7 @@
 \title{Aggregate genotypes among affected individuals for each family}
 \usage{
 agg.genos.by.fam(
-  pedfile.path,
+  pedfile.path = NULL,
   pedfile = NULL,
   Z_annot = NULL,
   exclude_annot = 1,

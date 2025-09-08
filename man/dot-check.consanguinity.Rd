@@ -5,10 +5,10 @@
 \title{usethis::use_package("kinship2")
 Check whether there is consanguinity among pedigrees}
 \usage{
-.check.consanguinity(pedigree)
+.check.consanguinity(pedigrees)
 }
 \arguments{
-\item{pedigree}{is a pedigree of a pedigreeList format or list of pedigrees}
+\item{pedigrees}{is a pedigree of a pedigreeList format or list of pedigrees}
 }
 \description{
 usethis::use_package("kinship2")
