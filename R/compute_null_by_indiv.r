@@ -7,9 +7,10 @@
 #' @param pedigree is a object of pedigree format
 #' @param eta multiplicative factor for the joint carrier probability for computing the covariance between two variants for a pairs of subjects (between 0 and 1)
 #' @param etap multiplicative factor for the marginal carrier probability for computing the covariance between two variants in the same subject (between 0 and 1)
-#' @return List over pedigrees of lists of the individual variance-covariance matrix for one variant and the individual covariance matrix for two variants 
+#' @return List over pedigrees of lists of the individual variance-covariance matrix for one variant and the individual covariance matrix for two variants
+#' @return List of sharing configuration probabilities computed by the RVsharing function from the RVS package
 #' @export
-compute.null.by.indiv <- function(pedigree,eta=0.95,etap=0.95) {
+compute.null.by.indiv <- function(pedigree,eta=0.95,etap=0.95,probs=NULL) {
   
   ### Configurations possibles et probabilités de partage
   configs.with.probs <- lapply(names(pedigree), function(fam){ 
@@ -27,8 +28,8 @@ compute.null.by.indiv <- function(pedigree,eta=0.95,etap=0.95) {
     configs <- t(sapply(carrier.sets, function(set) as.integer(carriers %in% set)))
     colnames(configs) <- carriers
     
-    # Probabilité de partage
-    probs <- sapply(carrier.sets, function(vec)
+    # Calcul des probabilités de partage si elles ne sont pas fournies
+    if (is.null(probs)) probs <- sapply(carrier.sets, function(vec)
       RVS::RVsharing(pedigree[[fam]], carriers = vec, useAffected = TRUE))
     
     # Données retrournées
