@@ -9,6 +9,7 @@ compute.null(
   distinguishHomo = FALSE,
   cryptic.relatedness = FALSE,
   kinshipCoeff = NULL,
+  out.prob.dist = FALSE,
   fam.ids = NULL
 )
 }
@@ -20,6 +21,8 @@ compute.null(
 \item{cryptic.relatedness}{a boolean: TRUE when cryptic relatedness is expected, FALSE otherwise}
 
 \item{kinshipCoeff}{mean kinship coefficient among the pedigree founders}
+
+\item{out.prob.dist}{a boolean: if TRUE the distribution of rare variant sharing probabilities over sharing configurations in each family is included in the returned object}
 
 \item{fam}{a vector of family ids where inbreeding or cryptic relatedness may be computed}
 }

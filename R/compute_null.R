@@ -8,11 +8,12 @@
 #' @param distinguishHomo a boolean: TRUE when inbreeding among family members is expected, FALSE otherwise
 #' @param cryptic.relatedness a boolean: TRUE when cryptic relatedness is expected, FALSE otherwise
 #' @param kinshipCoeff mean kinship coefficient among the pedigree founders
+#' @param out.prob.dist a boolean: if TRUE the distribution of rare variant sharing probabilities over sharing configurations in each family is included in the returned object
 #' @param fam a vector of family ids where inbreeding or cryptic relatedness may be computed
 #' @return The expected genotype value, variance and covariance for each pedigree within a data.frame
 #' @export
 
-compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=FALSE, kinshipCoeff=NULL, fam.ids=NULL){
+compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=FALSE, kinshipCoeff=NULL, out.prob.dist=FALSE, fam.ids=NULL){
 
   if(!distinguishHomo%in%c(TRUE,FALSE) | !cryptic.relatedness%in%c(TRUE,FALSE) ){
     stop("distinguishHomo or cryptic.relatedness parameters were not well set, please check ...")
@@ -341,8 +342,9 @@ compute.null = function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=F
 
   df.expected.var.covar = merge(expected, var.covar, by="FamID")
   attributes(df.expected.var.covar)$distinguishHomo = distinguishHomo
-
-  return(df.expected.var.covar)
+  
+  if (out.prob.dist) return(list(distributions=l,expected.values=df.expected.var.covar))
+  else return(df.expected.var.covar)
 }
 
 

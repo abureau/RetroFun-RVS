@@ -4,7 +4,7 @@
 \alias{compute.null.by.indiv}
 \title{Compute the null value for pedigrees}
 \usage{
-compute.null.by.indiv(pedigree, eta = 0.95, etap = 0.95)
+compute.null.by.indiv(pedigree, eta = 0.95, etap = 0.95, probs = NULL)
 }
 \arguments{
 \item{pedigree}{is a object of pedigree format}
@@ -15,6 +15,8 @@ compute.null.by.indiv(pedigree, eta = 0.95, etap = 0.95)
 }
 \value{
 List over pedigrees of lists of the individual variance-covariance matrix for one variant and the individual covariance matrix for two variants
+
+List of sharing configuration probabilities computed by the RVsharing function from the RVS package
 }
 \description{
 This function computes the genotype null value for one or more families. It assumes that the
