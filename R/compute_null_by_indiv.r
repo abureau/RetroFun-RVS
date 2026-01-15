@@ -37,9 +37,25 @@ compute.null.by.indiv <- function(pedigree, distinguishHomo = FALSE, cryptic.rel
     
     # Calcul des probabilités de partage si elles ne sont pas fournies
     # À faire: traiter le cas de la consanguinité
-    if (is.null(probs)) probs <- sapply(carrier.sets, function(vec)
-      RVS::RVsharing(pedigree[[fam]], carriers = vec, useAffected = TRUE))
-    
+    if (is.null(probs)) 
+    {
+      if(cryptic.relatedness==TRUE){
+        
+        if(!is.null(kinshipCoeff)){
+          probs = sapply(carrier.sets, function(vec) 
+            RVS::RVsharing(pedigree[[fam]], carriers=vec,useAffected = TRUE, kinshipCoeff=kinshipCoeff, kinshipOrder=nf%/%2+1, distinguishHomo = distinguishHomo)
+          )
+        }
+        else{
+          stop("Please provide a correct value for the kinship coeff ...")
+        }
+      }
+      else { # Pas de relations cryptiques
+      probs <- sapply(carrier.sets, function(vec)
+        RVS::RVsharing(pedigree[[fam]], carriers = vec, useAffected = TRUE, distinguishHomo = distinguishHomo)
+      )
+      }
+    } 
     # Données retrournées
     list(configs = configs, probs = probs)
   })

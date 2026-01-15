@@ -21,7 +21,7 @@ compute.var.cov.by.indiv <- function(configs.with.probs,distinguishHomo=FALSE, c
    covar1 <- matrix(0, nb.indiv, nb.indiv)  ## Calcul de la covariance entre deux individus (i et ip) concernant le même variant j
    covar3 <- matrix(0, nb.indiv, nb.indiv)  ## Calcul de la covariance entre deux individus (i et ip) concernant deux variants distincts j et j'
 
-    if (distinguishHomo=FALSE) {
+    if (distinguishHomo==FALSE) {
      ## Calcul de la variance individuelle et de la covariance qu’un même individu porte simultanément deux variants différents.
      for (i in 1:nb.indiv) {
      p[i]<-sum(probs[configs[, i] == 1], na.rm = TRUE)
@@ -54,14 +54,10 @@ compute.var.cov.by.indiv <- function(configs.with.probs,distinguishHomo=FALSE, c
        }
      }
    
-   diag(covar1)<-var.ind
-   
-   diag(covar3)<-covar2
-  
     ##Mise sous forme triangulaire des matrices de covariance
     
-    covar1[upper.tri(covar1)] <- 0
-    covar3[upper.tri(covar3)] <- 0
+#    covar1[upper.tri(covar1)] <- 0
+#    covar3[upper.tri(covar3)] <- 0
     }
     else if(distinguishHomo==TRUE) {
       
@@ -84,9 +80,9 @@ compute.var.cov.by.indiv <- function(configs.with.probs,distinguishHomo=FALSE, c
           # On a besoin de calculer les probabilités marginales par sujet une seule fois
           if (i==1)
           {
-          # Probabilité que le sujet 1 porte 1 ou 2 copies
-          if (ip==1) vp[i,] = mp[i,ip,,1] + mp[i,ip,,2]
-          # Probabilité que le sujet 2 porte 1 ou 2 copies
+          # Probabilité que le sujet i=1 porte 1 ou 2 copies (calculée une seule fois quand on traite le sujet 2)
+          if (ip==2) vp[i,] = mp[i,ip,,1] + mp[i,ip,,2]
+          # Probabilité que le sujet ip porte 1 ou 2 copies
           vp[ip,] = mp[i,ip,1,] + mp[i,ip,2,]
           }
           
@@ -101,10 +97,17 @@ compute.var.cov.by.indiv <- function(configs.with.probs,distinguishHomo=FALSE, c
         }
       ## Calcul de la variance individuelle et de la covariance qu’un même individu porte simultanément deux variants différents.
       var.ind[i] = vp[i,1] + 4*vp[i,2] - (vp[i,1] + 2*vp[i,2])^2
-      covar[i] = etap*(vp[i,1] + 4*vp[i,2]) - (vp[i,1] + 2*vp[i,2])^2
+      covar2[i] = etap*(vp[i,1] + 4*vp[i,2]) - (vp[i,1] + 2*vp[i,2])^2
       }
+    var.ind[nb.indiv] = vp[nb.indiv,1] + 4*vp[nb.indiv,2] - (vp[nb.indiv,1] + 2*vp[nb.indiv,2])^2
+    covar2[nb.indiv] = etap*(vp[nb.indiv,1] + 4*vp[nb.indiv,2]) - (vp[nb.indiv,1] + 2*vp[nb.indiv,2])^2
     }
-    ## Resultats par famille 
+
+   diag(covar1)<-var.ind
+   
+   diag(covar3)<-covar2
+   
+   ## Resultats par famille 
     return(list("FamId" =fam,"Covar(ij,i'j)"=covar1,"Covar(ij,i'j')"=covar3))
   })
   
