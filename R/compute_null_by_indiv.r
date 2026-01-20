@@ -10,7 +10,7 @@
 #' @return List over pedigrees of lists of the individual variance-covariance matrix for one variant and the individual covariance matrix for two variants
 #' @return List of sharing configuration probabilities computed by the RVsharing function from the RVS package
 #' @export
-compute.null.by.indiv <- function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=FALSE, kinshipCoeff=NULL,eta=0.95,etap=0.95,probs=NULL) {
+compute.null.by.indiv <- function(pedigree, distinguishHomo = FALSE, cryptic.relatedness=FALSE, kinshipCoeff=NULL,eta=0.95,etap=0.95,probs.list=NULL) {
   
   if(!distinguishHomo%in%c(TRUE,FALSE) | !cryptic.relatedness%in%c(TRUE,FALSE) ){
     stop("distinguishHomo or cryptic.relatedness parameters were not well set, please check ...")
@@ -36,8 +36,7 @@ compute.null.by.indiv <- function(pedigree, distinguishHomo = FALSE, cryptic.rel
     colnames(configs) <- carriers
     
     # Calcul des probabilités de partage si elles ne sont pas fournies
-    # À faire: traiter le cas de la consanguinité
-    if (is.null(probs)) 
+    if (is.null(probs.list)) 
     {
       if(cryptic.relatedness==TRUE){
         
@@ -56,6 +55,7 @@ compute.null.by.indiv <- function(pedigree, distinguishHomo = FALSE, cryptic.rel
       )
       }
     } 
+    else probs = probs.list[[fam]]
     # Données retrournées
     list(configs = configs, probs = probs)
   })
