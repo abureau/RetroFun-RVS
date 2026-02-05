@@ -4,7 +4,15 @@
 \alias{compute.null.by.indiv}
 \title{Compute the null value for pedigrees}
 \usage{
-compute.null.by.indiv(pedigree, eta = 0.95, etap = 0.95, probs = NULL)
+compute.null.by.indiv(
+  pedigree,
+  distinguishHomo = FALSE,
+  cryptic.relatedness = FALSE,
+  kinshipCoeff = NULL,
+  eta = 0.95,
+  etap = 0.95,
+  probs.list = NULL
+)
 }
 \arguments{
 \item{pedigree}{is a object of pedigree format}
