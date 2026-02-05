@@ -7,7 +7,7 @@
 #'@return The expected genotype value, variance and covariance for each pedigree within a data.frame
 #'@export
 
-update.covar.by.fam = function(null.value.by.fam,null.covar.by.indiv)
+replace.covar.by.fam = function(null.value.by.fam,null.covar.by.indiv)
 {
   # Calcule 2 x la somme des covariances individuelles
   #covar.by.fam = sapply(null.covar.by.indiv,function(covar) 2*sum(covar$`Covar(ij,i'j')`[lower.tri(covar$`Covar(ij,i'j')`)])+sum(diag(covar$`Covar(ij,i'j')`)))
