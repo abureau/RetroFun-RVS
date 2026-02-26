@@ -9,7 +9,7 @@
 
 replace.covar.by.fam = function(null.value.by.fam,null.covar.by.indiv)
 {
-  # Calcule 2 x la somme des covariances individuelles
+  # Calcule la somme des covariances individuelles
   covar.by.fam = sapply(null.covar.by.indiv,function(covar) sum(covar$`Covar(ij,i'j')`))
   names(covar.by.fam) = sapply(null.covar.by.indiv,function(l) l$FamId)
   null.value.by.fam[,"CoVar"] = covar.by.fam[null.value.by.fam$FamID]
