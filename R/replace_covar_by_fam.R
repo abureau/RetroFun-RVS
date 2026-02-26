@@ -13,7 +13,7 @@ replace.covar.by.fam = function(null.value.by.fam,null.covar.by.indiv)
   #covar.by.fam = sapply(null.covar.by.indiv,function(covar) 2*sum(covar$`Covar(ij,i'j')`[lower.tri(covar$`Covar(ij,i'j')`)])+sum(diag(covar$`Covar(ij,i'j')`)))
   # Cette version prend 2 fois la somme de la matrice et soustrait la somme de la diagonale qu'il faut compter une seule fois.
   # Ça évite d'extraire la diagonale inférieure.
-  covar.by.fam = sapply(null.covar.by.indiv,function(covar) 2*sum(covar$`Covar(ij,i'j')`)-sum(diag(covar$`Covar(ij,i'j')`)))
+  covar.by.fam = sapply(null.covar.by.indiv,function(covar) sum(covar$`Covar(ij,i'j')`))
   names(covar.by.fam) = sapply(null.covar.by.indiv,function(l) l$FamId)
   null.value.by.fam[,"CoVar"] = covar.by.fam[null.value.by.fam$FamID]
   null.value.by.fam
