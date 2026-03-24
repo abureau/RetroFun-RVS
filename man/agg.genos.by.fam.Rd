@@ -9,7 +9,8 @@ agg.genos.by.fam(
   pedfile = NULL,
   Z_annot = NULL,
   exclude_annot = 1,
-  correction = c("none", "replace", "remove")
+  correction = "none",
+  type = "alleles"
 )
 }
 \arguments{
@@ -22,9 +23,12 @@ agg.genos.by.fam(
 \item{exclude_annot}{vector of indices of the columns of the Z_annot matrix to exclude when computing
 the maximal annotation for each variant (default = 1)}
 
-\item{correction}{a string corresponding to the applied correction, none when no correction is applied
-replace when homozyguous configurations are replaced by their corresponding heterozyguous configurations, remove when variants with
-at least one homozyguous configurations}
+\item{correction}{a string corresponding to the applied correction, "none" when no correction is applied
+"replace" when homozyguous configurations are replaced by their corresponding heterozyguous configurations,
+"remove" when variants with at least one homozyguous configurations}
+
+\item{type}{an optional character string taking value "alleles" or
+"count". Default is "alleles"}
 }
 \value{
 A list with the ped file corrected and aggregated by family and index each variants observed in families

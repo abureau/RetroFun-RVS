@@ -12,13 +12,15 @@
 #'@param Z_annot is a p*q matrix of functional annotations. The first column should be composed only with ones
 #'@param exclude_annot vector of indices of the columns of the Z_annot matrix to exclude when computing 
 #'the maximal annotation for each variant (default = 1)
-#'@param correction a string corresponding to the applied correction, none when no correction is applied
-#'replace when homozyguous configurations are replaced by their corresponding heterozyguous configurations, remove when variants with
-#'at least one homozyguous configurations
+#'@param correction a string corresponding to the applied correction, "none" when no correction is applied
+#'"replace" when homozyguous configurations are replaced by their corresponding heterozyguous configurations, 
+#'"remove" when variants with at least one homozyguous configurations
+#'@param type an optional character string taking value "alleles" or 
+#' "count". Default is "alleles"
 #'@return A list with the ped file corrected and aggregated by family and index each variants observed in families
 #'@export
 
-agg.genos.by.fam = function(pedfile.path=NULL, pedfile=NULL, Z_annot=NULL, exclude_annot=1, correction=c("none","replace","remove")){
+agg.genos.by.fam = function(pedfile.path=NULL, pedfile=NULL, Z_annot=NULL, exclude_annot=1, correction="none",type="alleles"){
   if(is.null(pedfile) & !is.null(pedfile.path)){
     p = read.table(pedfile.path, header = FALSE)
   }
@@ -32,13 +34,20 @@ agg.genos.by.fam = function(pedfile.path=NULL, pedfile=NULL, Z_annot=NULL, exclu
   affected = which(fam[,6]==2)
   genos = p[,7:ncol(p)]
 
+  if (type=="alleles")
+  {
   genos[genos==1] = 0
   genos[genos==2] = 1
 
   df.genos = data.frame(do.call("cbind",lapply(seq(2, ncol(genos),2), function(x){
     rowSums(genos[,c(x-1,x)])
   })))
-
+  }
+  else
+  {
+    if(type == "count") df.genos = as.data.frame(genos)
+    else stop("Option type is not allele or count.")
+  }
   colnames(df.genos) = paste0("X", 1:ncol(df.genos))
 
   #Keeping only affected individuals
@@ -104,7 +113,7 @@ agg.genos.by.fam = function(pedfile.path=NULL, pedfile=NULL, Z_annot=NULL, exclu
   df.genos.affected = df.genos.affected %>% dplyr::select(-which(colSums(df.genos.affected, na.rm = TRUE)==0))
   df.genos.affected = df.genos.affected %>% dplyr::select(-which(colSums(is.na(df.genos.affected))==nrow(df.genos.affected)))
 
-  df.genos.affected$pedigree = fam[affected,"V1"]
+  df.genos.affected$pedigree = fam[affected,1]
 
   df.genos.agg.by.fam = aggregate(.~pedigree,df.genos.affected, sum, na.rm=TRUE ,na.action = NULL)
 
